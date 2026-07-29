@@ -1,0 +1,366 @@
+1. What is useRef?
+A. useRef is a React Hook that lets you store a mutable value that changes across renders without causing a re-render.
+
+Syntax: 
+import { useRef } from "react";
+const ref = useRef(initialValue);
+
+It returns an object like this:
+{
+   current: initialValue
+}
+
+Example:
+
+const countRef = useRef(0);
+console.log(countRef);
+
+Output : { current: 0 }
+The value is stored inside the .current property.
+
+
+2. What is inside useRef?
+A. When you create : const inputRef = useRef(null);
+   React returns : { current: null }
+   Later React Changes it to : { current:  <input /> } - when it's attached to a DOM element.
+
+   So, If you're storing your own value: 
+   const ref = useRef(100);
+   ref.current will be 100
+   you can chnage it anytime : ref.current = 500; (React does not re-render.)
+
+
+3. Why is useRef used?
+A. There are two major reasons.
+
+    1. Access DOM Elements 
+        import { useRef } from "react";
+
+        function App() {
+        const inputRef = useRef(null);
+
+        function focusInput() {
+            inputRef.current.focus();
+        }
+
+        return (
+            <>
+            <input ref={inputRef} />
+            <button onClick={focusInput}>Focus</button>
+            </>
+        );
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+useState
+useRef
+variable
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Here's a simple React example of an OTP input where:
+
+✅ Typing automatically moves to the next input.
+✅ Backspace moves to the previous input if the current box is empty.
+✅ Uses useRef to control focus.
+import React, { useRef, useState } from "react";
+
+export default function OTPInput() {
+  const OTP_LENGTH = 6;
+
+  const [otp, setOtp] = useState(new Array(OTP_LENGTH).fill(""));
+  const inputRefs = useRef([]);
+
+  const handleChange = (value, index) => {
+    // Allow only numbers
+    if (!/^\d?$/.test(value)) return;
+
+    const newOtp = [...otp];
+    newOtp[index] = value;
+    setOtp(newOtp);
+
+    // Move to next input
+    if (value && index < OTP_LENGTH - 1) {
+      inputRefs.current[index + 1].focus();
+    }
+  };
+
+  const handleKeyDown = (e, index) => {
+    // Move to previous input on Backspace
+    if (
+      e.key === "Backspace" &&
+      otp[index] === "" &&
+      index > 0
+    ) {
+      inputRefs.current[index - 1].focus();
+    }
+  };
+
+  return (
+    <div style={{ display: "flex", gap: "10px" }}>
+      {otp.map((digit, index) => (
+        <input
+          key={index}
+          ref={(el) => (inputRefs.current[index] = el)}
+          type="text"
+          inputMode="numeric"
+          maxLength={1}
+          value={digit}
+          onChange={(e) => handleChange(e.target.value, index)}
+          onKeyDown={(e) => handleKeyDown(e, index)}
+          style={{
+            width: "50px",
+            height: "50px",
+            textAlign: "center",
+            fontSize: "24px",
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+How useRef works here
+const inputRefs = useRef([]);
+
+This stores references to all the input elements.
+
+Each input saves itself into the array:
+
+ref={(el) => (inputRefs.current[index] = el)}
+
+So the array looks like:
+
+inputRefs.current = [
+  input0,
+  input1,
+  input2,
+  input3,
+  input4,
+  input5,
+];
+
+To move to the next input:
+
+inputRefs.current[index + 1].focus();
+
+To move to the previous input:
+
+inputRefs.current[index - 1].focus();
+Example Flow
+[_] [_] [_] [_] [_] [_]
+
+Type 1
+[1] [_] [_] [_] [_] [_]
+      ↑ focus automatically
+
+Type 2
+[1] [2] [_] [_] [_] [_]
+           ↑
+
+Type 3
+[1] [2] [3] [_] [_] [_]
+
+Press Backspace when the current box is empty:
+
+[1] [2] [_] [_] [_] [_]
+     ↑ focus moves back
+
+You can also extend this with OTP paste support, so pasting something like 123456 automatically fills all six input boxes.
+
+
+
+
+
+
+
+
+
+
+
+
+For a normal form, you can keep a ref for each field and focus the first field that has a validation error.
+
+import { useRef, useState } from "react";
+
+export default function SignupForm() {
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+
+  const [errors, setErrors] = useState({});
+
+  const inputRefs = useRef({});
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+
+    // Clear error while typing
+    setErrors((prev) => ({
+      ...prev,
+      [name]: "",
+    }));
+  };
+
+  const validate = () => {
+    const newErrors = {};
+
+    if (!form.name.trim()) {
+      newErrors.name = "Name is required";
+    }
+
+    if (!form.email.trim()) {
+      newErrors.email = "Email is required";
+    }
+
+    if (form.password.length < 6) {
+      newErrors.password = "Password must be at least 6 characters";
+    }
+
+    setErrors(newErrors);
+
+    // Focus the first field with an error
+    const firstErrorField = Object.keys(newErrors)[0];
+
+    if (firstErrorField) {
+      inputRefs.current[firstErrorField]?.focus();
+      return false;
+    }
+
+    return true;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (validate()) {
+      console.log("Form Submitted", form);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <div>
+        <input
+          ref={(el) => (inputRefs.current.name = el)}
+          type="text"
+          name="name"
+          placeholder="Name"
+          value={form.name}
+          onChange={handleChange}
+          style={{
+            border: errors.name ? "2px solid red" : "1px solid gray",
+          }}
+        />
+        {errors.name && <p style={{ color: "red" }}>{errors.name}</p>}
+      </div>
+
+      <div>
+        <input
+          ref={(el) => (inputRefs.current.email = el)}
+          type="email"
+          name="email"
+          placeholder="Email"
+          value={form.email}
+          onChange={handleChange}
+          style={{
+            border: errors.email ? "2px solid red" : "1px solid gray",
+          }}
+        />
+        {errors.email && <p style={{ color: "red" }}>{errors.email}</p>}
+      </div>
+
+      <div>
+        <input
+          ref={(el) => (inputRefs.current.password = el)}
+          type="password"
+          name="password"
+          placeholder="Password"
+          value={form.password}
+          onChange={handleChange}
+          style={{
+            border: errors.password ? "2px solid red" : "1px solid gray",
+          }}
+        />
+        {errors.password && (
+          <p style={{ color: "red" }}>{errors.password}</p>
+        )}
+      </div>
+
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+How it works
+
+Store refs by field name:
+
+const inputRefs = useRef({});
+
+Assign each input:
+
+<input ref={(el) => (inputRefs.current.name = el)} />
+<input ref={(el) => (inputRefs.current.email = el)} />
+<input ref={(el) => (inputRefs.current.password = el)} />
+
+Suppose validation returns:
+
+const newErrors = {
+  email: "Email is required",
+  password: "Password is too short",
+};
+
+Get the first error field:
+
+const firstErrorField = Object.keys(newErrors)[0];
+
+Focus it:
+
+inputRefs.current[firstErrorField]?.focus();
+
+If the user leaves Email and Password empty, the cursor automatically jumps to the Email input because it's the first field with an error. This pattern works well for larger forms too, since you only need one useRef({}) object regardless of how many fields you have.

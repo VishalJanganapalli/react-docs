@@ -1,0 +1,265 @@
+Q. What is useMemo ?
+A. In React, useMemo is a built-in Hook designed for performance optimization. 
+   It lets you cache (or "memoize") the result of an expensive calculation between re-renders.
+
+   Example: Think of it like writing down the answer to a complex math problem on a sticky note.
+            The next time someone asks you for the answer, instead of re-calculating everything from scratch, 
+            you just read it off the note—unless the input numbers actually change.
+
+
+
+1. How It Works (The Core Concept)
+A. By default, when a React component re-renders, every line of code inside its body runs again. 
+   If you have a function that loops through 10,000 items or does heavy mathematical transformations, 
+   running it on every single render (even when unrelated state changes) can lag your UI.
+
+In the situation like this we use useMemo : 
+
+    useMemo takes two arguments:
+    A calculation function that returns a value.
+    A dependency array listing every value used inside the calculation.
+
+    import { useMemo } from 'react';
+    const cachedValue = useMemo(() => {
+    // 1. Run complex calculation here
+    return calculateExpensiveResult(a, b);
+    }, [a, b]); // 2. Only re-run if 'a' or 'b' change
+
+    First Render: React runs your calculation function and remembers the returned result.
+    Subsequent Renders: React checks if a or b changed.
+        No change? It skips the calculation and instantly gives you the saved cachedValue.
+        Changed? It runs the calculation again, saves the new answer, and returns it.
+
+
+
+
+2. Real-Time Use Cases & Code Examples
+A. Filtering or Sorting a Large Dataset (Most Common)
+
+   Imagine you're building an e-commerce dashboard or product listing page with thousands of items. 
+   Users can type into a search bar or toggle a dark/light theme mode.
+
+   The Problem Without useMemo:
+   Every time the user toggles the theme, the component re-renders. Without optimization, 
+   React will re-filter and re-sort 10,000 products again, making the theme toggle feel sluggish.
+
+   The Solution With useMemo:
+
+   Example 1:
+   import React, { useState, useMemo } from 'react';
+
+    function ProductList({ products }) {
+    const [searchTerm, setSearchTerm] = useState('');
+    const [isDarkMode, setIsDarkMode] = useState(false);
+
+    // Heavy operation memoized:
+    // Filtering and sorting only recalculates when `products` or `searchTerm` changes.
+    const visibleProducts = useMemo(() => {
+        console.log('Filtering products...'); // Will NOT log when toggling dark mode!
+        
+        return products
+        .filter((p) => p.name.toLowerCase().includes(searchTerm.toLowerCase()))
+        .sort((a, b) => a.price - b.price);
+    }, [products, searchTerm]);
+
+    return (
+        <div className={isDarkMode ? 'dark-theme' : 'light-theme'}>
+        {/* Changing theme triggers re-render, but bypasses the expensive filtering */}
+        <button onClick={() => setIsDarkMode(!isDarkMode)}>
+            Toggle Theme
+        </button>
+
+        <input
+            type="text"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Search products..."
+        />
+
+        <ul>
+            {visibleProducts.map((product) => (
+            <li key={product.id}>{product.name} - ${product.price}</li>
+            ))}
+        </ul>
+        </div>
+    );
+    }
+
+
+    Example 2 : 
+    import { useEffect, useMemo, useState } from "react";
+
+    function Users() {
+    const [users, setUsers] = useState([]);
+
+    useEffect(() => {
+        fetch("https://jsonplaceholder.typicode.com/users")
+        .then((res) => res.json())
+        .then(setUsers);
+    }, []);
+
+    const activeUsers = useMemo(() => {
+        return users.filter((user) => user.id % 2 === 0);
+    }, [users]);
+
+    return (
+        <div>
+        {activeUsers.map((user) => (
+            <p key={user.id}>{user.name}</p>
+        ))}
+        </div>
+    );
+    }
+
+
+
+3. When NOT to Use useMemo?
+A. Don't wrap every single function or variable in useMemo. 
+   Memoization isn't free—it consumes memory to store values and adds overhead for React to compare dependency arrays on every render.
+
+   Skip it for simple operations: 
+   Basic arithmetic, string concatenations, or filtering small arrays (< 100 items) take fractions of a millisecond. 
+   The overhead of useMemo might actually make them slower.
+
+   Skip it if dependencies change on every render: 
+   If a value in the dependency array changes every time the component renders anyway, 
+   useMemo does zero work and adds unnecessary code complexity.
+
+   Use useMemo only when:
+   You have measured a noticeable slowdown caused by a genuinely expensive calculation.
+
+
+
+4. Why useMemo is used in React Context?
+A. When you create a Context Provider, you pass a single value prop to it:
+    <MyContext.Provider value={...}>
+    {children}
+    </MyContext.Provider>
+
+    The Problem: Object Reference Instability
+    In JavaScript, {} creates a brand new object in memory every time it executes:
+
+    Example : 
+    // ❌ BAD: Creates a NEW object reference on every single render of AppProvider
+    function AppProvider({ children }) {
+    const [user, setUser] = useState(null);
+    const [theme, setTheme] = useState('dark');
+
+    return (
+        <AppContext.Provider value={{ user, setUser, theme, setTheme }}>
+        {children}
+        </AppContext.Provider>
+    );
+    }
+
+    Every time AppProvider re-renders (for example, if parent state changes or a child component updates theme), 
+    React creates a brand-new object for value.
+
+    The consequence: 
+    Every single component in your entire app tree that consumes useContext(AppContext) is forced to re-render—even if user and theme didn't actually change!
+
+    The Solution with useMemo : 
+    By wrapping the Context value in useMemo, you lock down its memory reference. 
+    React will only generate a new object if one of the dependencies actually changes
+
+    // ✅ GOOD: Keeps the object reference stable across renders
+    function AppProvider({ children }) {
+    const [user, setUser] = useState(null);
+    const [theme, setTheme] = useState('dark');
+
+    // React re-creates this object ONLY if `user` or `theme` changes
+    const contextValue = useMemo(() => {
+        return { user, setUser, theme, setTheme };
+    }, [user, theme]);
+
+    return (
+        <AppContext.Provider value={contextValue}>
+        {children}
+        </AppContext.Provider>
+    );
+    }
+
+
+
+
+
+
+
+
+
+//React.memo
+React.memo is a higher-order component (HOC) that prevents unnecessary re-renders of a functional component.
+It memoizes the rendered output and only re-renders the component when its props change.
+
+
+Why use React.memo?
+Normally, when a parent component re-renders, all of its child components also re-render, even if their props haven't changed.
+React.memo skips the child component's re-render if its props are the same as the previous render.
+
+Example without React.memo : 
+function Child({ name }) {
+  console.log("Child rendered");
+  return <h2>{name}</h2>;
+}
+
+function Parent() {
+  const [count, setCount] = React.useState(0);
+
+  return (
+    <>
+      <button onClick={() => setCount(count + 1)}>
+        Count: {count}
+      </button>
+      <Child name="Alice" />
+    </>
+  );
+}
+
+Output:
+Click the button.
+Parent re-renders.
+Child also re-renders, even though name is still "Alice".
+
+
+Example with React.memo : 
+const Child = React.memo(({ name }) => {
+  console.log("Child rendered");
+  return <h2>{name}</h2>;
+});
+
+function Parent() {
+  const [count, setCount] = React.useState(0);
+
+  return (
+    <>
+      <button onClick={() => setCount(count + 1)}>
+        Count: {count}
+      </button>
+      <Child name="Alice" />
+    </>
+  );
+}
+
+Clicking the button re-renders Parent.
+Child does not re-render because its name prop hasn't changed.
+
+
+
+How does it compare props?
+By default, React.memo performs a shallow comparison of props.
+
+Primitive values
+<Child age={20} />
+20 === 20 → no re-render.
+
+Objects and arrays
+<Child user={{ name: "Alice" }} />
+Even if the contents are the same, a new object is created on every render.
+
+{ name: "Alice" } !== { name: "Alice" }
+So the component will re-render.
+
+To avoid this, use useMemo:
+const user = useMemo(() => ({ name: "Alice" }), []);
+
+<Child user={user} />;

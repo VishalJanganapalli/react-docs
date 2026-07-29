@@ -1,0 +1,116 @@
+🧠 React Day 3 Practice Tasks (Props + Lists + Keys + map)
+
+🟢 LEVEL 1 — Basics (Warm-up)
+
+1. Student Card UI
+Create a StudentCard component that shows:
+- name
+- age
+- city
+
+👉 Pass data using props from parent.
+
+--------------------------------------------------
+
+2. Skills List
+Given:
+const skills = ["HTML", "CSS", "JS", "React"];
+
+👉 Task:
+- Render all skills using .map()
+- Show inside <li> tags
+
+--------------------------------------------------
+
+3. Simple User Greeting
+Create a component:
+
+👉 Condition:
+- If isLoggedIn = true → show "Welcome User"
+- Else → show "Please Login"
+
+--------------------------------------------------
+
+🟡 LEVEL 2 — Intermediate
+
+4. Car Cards UI
+Given an array of cars:
+
+👉 Tasks:
+- Render car cards
+- Show:
+  - image
+  - model
+  - brand
+  - price and more data
+- Show status:
+  - 🟢 Available (true)
+  - 🔴 Not Available (false)
+
+--------------------------------------------------
+
+5. Filter Available Cars Only -  use Filter method
+👉 Show ONLY cars where:
+car.isAvailable === true
+
+--------------------------------------------------
+
+6. Highlight Expensive Cars
+👉 Condition:
+- If price > 50000 → show badge "Premium Car"
+- Else → "Standard Car"
+
+--------------------------------------------------
+
+7. Conditional Color UI
+👉 Task:
+Change card border color:
+- 🟢 Green → available
+- 🔴 Red → not available
+
+--------------------------------------------------
+
+🔵 LEVEL 3 — Advanced (Interview Level)
+
+8. Sort Cars (IMPORTANT)
+Add buttons for sorting:
+- Sort by Price (Low → High)
+- Sort by Price (High → Low)
+- Sort by Year (Newest first)
+
+👉 Hint:
+cars.sort((a, b) => a.price - b.price)
+
+--------------------------------------------------
+
+9. Dynamic Badge System (Interview Level)
+👉 Task:
+
+For products:
+
+price > 3000 → 🔥 Premium
+price 1000–3000 → ⭐ Mid
+price < 1000 → 🟢 Budget
+
+👉 Show badge next to product name
+
+💡 Hint:
+Use .map() to loop through products
+Create a variable like badge inside .map()
+Use if-else OR ternary conditions to assign badge
+Then display it inside JSX like:
+
+--------------------------------------------------
+
+10 . Highlight Expensive Product
+
+👉 Task: (take the data of products)
+If price > 1000:
+
+show "Expensive"
+Else:
+show "Affordable"
+
+--------------------------------------------------
+
+11. Nested Data Rendering (Simple Object Inside Object)

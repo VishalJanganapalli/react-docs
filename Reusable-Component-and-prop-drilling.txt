@@ -1,0 +1,57 @@
+1. Reusable Components in React?
+A. A reusable component is a React component that can be used in multiple places with different data by passing props. 
+   Instead of writing the same HTML and logic repeatedly, you create one component and reuse it wherever needed.
+
+   Why use reusable components?
+    ✅ Reduces duplicate code
+    ✅ Easier to maintain
+    ✅ Improves readability
+    ✅ Makes applications scalable
+    ✅ Faster development
+
+
+Example1: Button Component 
+
+        Instead of creating multiple buttons manually:
+        <button>Save</button>
+        <button>Delete</button>
+        <button>Update</button>
+
+        function Button({ text, color }) {
+        return (
+            <button
+            style={{
+                backgroundColor: color,
+                color: "white",
+                padding: "10px 20px",
+                border: "none",
+                borderRadius: "5px"
+            }}
+            >
+            {text}
+            </button>
+        );
+        }
+
+        export default Button;
+        
+
+        import Button from "./Button";
+        function App() {
+        return (
+            <>
+            <Button text="Save" color="green" />
+            <Button text="Delete" color="red" />
+            <Button text="Update" color="blue" />
+            </>
+        );
+        }
+
+
+Example 2: User Card
+Example 3: Product Card (E-commerce)
+Example 4: Student Details
+Example 5: Navbar
+Example 6: Input Component
+Example 7: Modal Component
+Example 8: Table Row Component

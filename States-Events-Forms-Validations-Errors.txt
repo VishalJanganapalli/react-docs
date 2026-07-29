@@ -1,0 +1,425 @@
+REACT PRACTICE TASKS
+(Based on State, Events, Forms and Validation)
+There are Totally 19 questions
+
+NOTE : 
+📋When you are displaying data and adding data hide the form , 
+📋show the adding form only on button click use toggle functionality there
+📋Use AI for the Styling not for functionality
+
+============================================================
+LEVEL 1 : STATE & EVENTS ⭐
+============================================================
+
+These tasks help you understand how state changes and how events work in React.
+
+------------------------------------------------------------
+1. Like Button ❤️
+Scenario: Instagram Post
+------------------------------------------------------------
+
+Requirements:
+- Initial likes = 0
+- Increase likes on click
+- Disable button after 100 likes
+
+Explanation:
+When users click the like button, likes should increase dynamically and stop after reaching the limit.
+
+Topics to Use:
+✔ useState
+✔ onClick
+✔ Conditional Rendering
+✔ Disabled Button
+
+------------------------------------------------------------
+2. Show / Hide Password 👁️
+Scenario: Login Page
+------------------------------------------------------------
+
+Requirements:
+- Password input field
+- Show / Hide button
+- Change button text dynamically
+
+Explanation:
+Users should be able to view or hide their password.
+
+Topics to Use:
+✔ Boolean State
+✔ useState
+✔ Ternary Operator
+✔ onClick
+
+------------------------------------------------------------
+3. Dark Mode Toggle 🌙
+Scenario: Website Theme
+------------------------------------------------------------
+
+Requirements:
+- Switch between light mode and dark mode
+- Change background color
+
+Explanation:
+Many websites provide dark mode for better user experience.
+
+Topics to Use:
+✔ Boolean State
+✔ Conditional Rendering
+✔ Inline CSS
+✔ Ternary Operator
+
+------------------------------------------------------------
+4. Character Counter 📝
+Scenario: Twitter Post
+------------------------------------------------------------
+
+Requirements:
+- Input field or textarea
+- Display number of characters typed
+- Turn count red after 280 characters
+
+Explanation:
+Twitter limits the number of characters allowed in a post.
+
+Topics to Use:
+✔ useState
+✔ onChange
+✔ Controlled Components
+✔ Conditional Rendering
+
+------------------------------------------------------------
+5. Age Eligibility Checker 🎂
+Scenario: Driving License Application
+------------------------------------------------------------
+
+Requirements:
+- Input age
+- Show Eligible or Not Eligible
+
+Explanation:
+Only users above 18 years can apply for a driving license.
+
+Topics to Use:
+✔ useState
+✔ onChange
+✔ Conditional Rendering
+✔ Number Input
+
+------------------------------------------------------------
+6. Temperature Converter 🌡️
+Scenario: Weather App
+------------------------------------------------------------
+
+Requirements:
+- Enter Celsius
+- Convert to Fahrenheit
+
+Explanation:
+Display Fahrenheit value whenever the Celsius value changes.
+
+Formula:
+F = (C × 9/5) + 32
+
+Topics to Use:
+✔ useState
+✔ onChange
+✔ Number State
+✔ Calculations
+
+------------------------------------------------------------
+7. Login / Logout System 🔐
+Scenario: Facebook
+------------------------------------------------------------
+
+Requirements:
+- Login button
+- Show profile section after login
+- Logout button
+
+Explanation:
+Profile section should only appear when user is logged in.
+
+Topics to Use:
+✔ Boolean State
+✔ Conditional Rendering
+✔ onClick
+
+------------------------------------------------------------
+8. Accordion FAQ 📖
+Scenario: Amazon FAQ
+------------------------------------------------------------
+
+Requirements:
+- Show answer when clicked
+- Hide answer when clicked again
+
+Explanation:
+Frequently asked questions should expand and collapse.
+
+Topics to Use:
+✔ Toggle State
+✔ Conditional Rendering
+✔ useState
+✔ onClick
+
+------------------------------------------------------------
+9. Movie Ticket Counter 🎬
+Scenario: BookMyShow
+------------------------------------------------------------
+
+Requirements:
+- Increase tickets
+- Decrease tickets
+- Maximum tickets = 10
+
+Explanation:
+Users shouldn't book more than 10 tickets.
+
+Topics to Use:
+✔ Number State
+✔ Disabled Button
+✔ Conditional Rendering
+✔ onClick
+
+------------------------------------------------------------
+10. Search Bar 🔍
+Scenario: Google Search
+------------------------------------------------------------
+
+Requirements:
+- Input field
+- Display entered text below
+
+Explanation:
+The UI should update whenever the user types.
+
+Topics to Use:
+✔ Controlled Components
+✔ useState
+✔ onChange
+
+
+============================================================
+LEVEL 2 : OBJECT STATE & FORMS ⭐⭐
+============================================================
+
+These tasks focus on handling multiple fields using object state.
+
+------------------------------------------------------------
+11. Feedback Form ⭐
+Scenario: Customer Feedback
+------------------------------------------------------------
+
+Fields:
+- Name
+- Email
+- Message
+
+Explanation:
+Users can submit their feedback.
+
+Topics to Use:
+✔ Object State
+✔ Form Submit
+✔ handleInput()
+✔ Spread Operator
+✔ preventDefault()
+
+------------------------------------------------------------
+12. User Profile Form 👤
+Scenario: Profile Page
+------------------------------------------------------------
+
+Fields:
+- Name
+- Age
+- City
+
+Explanation:
+Display entered details below the form.
+
+Topics to Use:
+✔ Object State
+✔ Dynamic Input Handling
+✔ Spread Operator
+✔ onChange
+
+
+============================================================
+LEVEL 3 : ARRAY STATE ⭐⭐⭐
+============================================================
+
+These tasks focus on arrays and map().
+
+------------------------------------------------------------
+13. Skills Todo List 💻
+Scenario: Resume Builder
+------------------------------------------------------------
+
+Requirements:
+- Add skills
+- Display all skills
+
+Explanation:
+Users can add multiple skills to their resume.
+
+Topics to Use:
+✔ Array State
+✔ map()
+✔ Spread Operator
+✔ useState
+
+------------------------------------------------------------
+14. Shopping Cart Items 🛒
+Scenario: E-Commerce App
+------------------------------------------------------------
+
+Requirements:
+- Add products
+- Display products
+
+Explanation:
+Every added product should appear inside the cart.
+
+Topics to Use:
+✔ Array State
+✔ map()
+✔ Spread Operator
+✔ List Rendering
+
+
+============================================================
+LEVEL 4 : VALIDATION ⭐⭐⭐⭐
+============================================================
+
+These tasks focus on regex and error handling.
+
+------------------------------------------------------------
+15. Registration Form with Validation 📝
+Scenario: Signup Page
+------------------------------------------------------------
+
+Fields:
+- Name
+- Email
+- Password
+
+Explanation:
+Users should not submit invalid information.
+
+Topics to Use:
+✔ Object State
+✔ Errors Object
+✔ Regex
+✔ Required Validation
+✔ Error Messages
+✔ preventDefault()
+
+------------------------------------------------------------
+16. Login Form Validation 🔐
+Scenario: Bank Login
+------------------------------------------------------------
+
+Fields:
+- Email
+- Password
+
+Explanation:
+Only valid users should be able to login.
+
+Topics to Use:
+✔ Regex
+✔ Error Object
+✔ Form Submit
+✔ Validation
+
+------------------------------------------------------------
+17. Online Course Registration 📚
+Scenario: Udemy
+------------------------------------------------------------
+
+Fields:
+- Name
+- Email
+- Course
+- Gender
+
+Explanation:
+Students should select a course and provide valid details.
+
+Topics to Use:
+✔ Object State
+✔ Dropdown
+✔ Radio Buttons
+✔ Regex
+✔ Error Handling
+
+------------------------------------------------------------
+18. Food Ordering Form 🍔
+Scenario: Swiggy
+------------------------------------------------------------
+
+Fields:
+- Name
+- Mobile Number
+- Address
+
+Explanation:
+Users should accept terms before placing an order.
+
+Topics to Use:
+✔ Checkbox
+✔ Validation
+✔ Object State
+✔ Error Messages
+
+
+============================================================
+LEVEL 5 : MINI PROJECT ⭐⭐⭐⭐⭐
+============================================================
+
+------------------------------------------------------------
+19. Complete Job Portal Registration System
+Scenario: Naukri.com
+------------------------------------------------------------
+
+Personal Details:
+- Name
+- Email
+- Password
+- Mobile Number
+
+Additional Fields:
+- Gender (Radio Button)
+- Skills (Multiple)
+- Preferred City (Dropdown)
+- Terms and Conditions (Checkbox)
+
+Explanation:
+Create a complete registration system and store all users in an array of objects.
+
+After submit display:
+
+- Name
+- Email
+- Gender
+- Skills
+- City
+
+Topics to Use:
+
+✔ useState
+✔ Object State
+✔ Array State
+✔ Array of Objects
+✔ map()
+✔ Form Submission
+✔ Regex
+✔ Error Handling
+✔ Checkbox
+✔ Radio Button
+✔ Dropdown
+✔ Conditional Rendering
+✔ Spread Operator
+✔ Reset Form

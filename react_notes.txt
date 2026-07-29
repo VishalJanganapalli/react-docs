@@ -1,0 +1,847 @@
+=========================
+1. JSX (JavaScript XML)
+=========================
+
+Definition:
+JSX stands for JavaScript XML. It allows us to write HTML-like code inside JavaScript.
+
+Example:
+
+function App() {
+  return <h1>Hello React</h1>;
+}
+
+=========================
+2. JSX Rules
+=========================
+
+1. One Parent Element
+
+Example:
+
+return (
+  <div>
+    <h1>Hello</h1>
+    <p>Welcome</p>
+  </div>
+)
+
+2. Close All Tags
+
+<img src="logo.png" />
+<input type="text" />
+
+3. Use className
+
+<h1 className="title">Hello</h1>
+
+4. Use camelCase Attributes
+
+<button onClick={handleClick}>Click</button>
+
+5. JavaScript inside {}
+
+const name = "Vishal";
+
+<h1>Hello {name}</h1>
+
+6. Inline CSS as Object
+
+<h1 style={{color:"red"}}>Hello</h1>
+
+7. Comments
+
+{/* This is a comment */}
+
+8. Conditions
+
+{isLoggedIn ? "Welcome" : "Login"}
+
+9. Lists using map()
+
+fruits.map((fruit,index)=>
+  <li key={index}>{fruit}</li>
+)
+
+10. Event Handlers
+
+<button onClick={handleClick}>
+  Click Me
+</button>
+
+================================================
+3. COMPONENTS IN REACT
+================================================
+
+What is a Component?
+
+A component is a reusable piece of UI.
+
+Example:
+
+App
+│
+├── Header
+├── Navbar
+├── Home
+└── Footer
+
+------------------------------------------------
+Creating a Functional Component
+------------------------------------------------
+
+Header.js
+
+function Header() {
+  return <h1>Header Component</h1>;
+}
+
+export default Header;
+
+
+App.js
+
+import Header from "./Header";
+
+function App() {
+  return <Header />;
+}
+
+------------------------------------------------
+Export and Import Meaning
+------------------------------------------------
+
+Export :
+Make a component available outside the current file.
+
+Import :
+Bring a component from another file into the current file.
+
+Flow:
+
+Header.js
+    ↓
+export Header
+    ↓
+App.js
+    ↓
+import Header
+    ↓
+<Header />
+
+------------------------------------------------
+Default Export
+------------------------------------------------
+
+Header.js
+
+function Header() {
+  return <h1>Header</h1>;
+}
+
+export default Header;
+
+
+App.js
+
+import Header from "./Header";
+
+Characteristics
+
+✓ One default export per file.
+✓ Import name can be changed.
+
+Example:
+
+import MyHeader from "./Header";
+
+------------------------------------------------
+Named Export
+------------------------------------------------
+
+Header.js
+
+export function Header() {
+  return <h1>Header</h1>;
+}
+
+export function Footer() {
+  return <h1>Footer</h1>;
+}
+
+
+App.js
+
+import { Header, Footer } from "./Header";
+
+Characteristics
+
+✓ Multiple exports allowed.
+✓ Names must match exactly.
+
+------------------------------------------------
+Default + Named Export
+------------------------------------------------
+
+Header.js
+
+function Header() {
+  return <h1>Header</h1>;
+}
+
+function Footer() {
+  return <h1>Footer</h1>;
+}
+
+export default Header;
+export { Footer };
+
+
+App.js
+
+import Header, { Footer } from "./Header";
+
+================================================
+Types of Components
+================================================
+
+1. Functional Components
+2. Class Components
+
+------------------------------------------------
+Functional Component
+------------------------------------------------
+
+function Header() {
+  return <h1>Hello</h1>;
+}
+
+------------------------------------------------
+Class Component
+------------------------------------------------
+
+class Header extends Component {
+  render() {
+    return <h1>Hello</h1>;
+  }
+}
+
+================================================
+Difference Between Functional and Class Components
+================================================
+
+Functional Component            | Class Component
+------------------------------------------------------------
+JavaScript function             | ES6 class
+Uses Hooks                      | Uses lifecycle methods
+Simple and readable             | More code
+No render() method              | Uses render()
+Most commonly used              | Rarely used now
+
+================================================
+Types of Functional Components
+================================================
+
+1. Normal Function
+
+function Header() {
+  return <h1>Header</h1>;
+}
+
+2. Arrow Function
+
+const Header = () => {
+  return <h1>Header</h1>;
+};
+
+3. Implicit Return
+
+const Header = () => (
+  <h1>Header</h1>
+);
+
+4. Component with Props
+
+function Welcome(props) {
+  return <h1>Hello {props.name}</h1>;
+}
+
+Usage:
+
+<Welcome name="Vishal" />
+
+5. Component with Destructuring
+
+function Welcome({name, age}) {
+  return (
+    <>
+      <h1>{name}</h1>
+      <h1>{age}</h1>
+    </>
+  );
+}
+
+
+=========================
+5. Styling in React
+=========================
+
+A. Inline Styling
+
+<h1 style={{color:"red"}}>
+  Hello
+</h1>
+
+B. Internal Styling
+
+const headingStyle = {
+  color: "blue",
+  fontSize: "40px"
+};
+
+<h1 style={headingStyle}>
+  Hello
+</h1>
+
+C. External CSS File
+
+App.css
+
+.title{
+  color: green;
+}
+
+App.js
+
+import "./App.css";
+
+<h1 className="title">
+  Hello React
+</h1>
+
+------------------------------------------------
+Difference Between Normal CSS and CSS Modules
+------------------------------------------------
+
+Normal CSS
+
+App.css
+
+.title{
+  color: green;
+}
+
+App.js
+
+import "./App.css";
+
+<h1 className="title">
+  Hello React
+</h1>
+
+Characteristics
+
+✓ Styles are global.
+✓ Same class names can conflict.
+✓ Suitable for small projects.
+
+-------------------------------------
+
+CSS Modules
+
+App.module.css
+
+.title{
+  color: blue;
+}
+
+App.js
+
+import styles from "./App.module.css";
+
+<h1 className={styles.title}>
+  Hello React
+</h1>
+
+Characteristics
+
+✓ Styles are local to the component.
+✓ Prevents class name conflicts.
+✓ Better for medium and large projects.
+
+------------------------------------------------
+Normal CSS vs CSS Modules
+------------------------------------------------
+
+Normal CSS                  | CSS Modules
+----------------------------------------------------
+Global styles               | Local styles
+Class conflicts possible    | No class conflicts
+Simple import               | Imported as object
+className="title"           | className={styles.title}
+Suitable for small apps     | Suitable for large apps
+
+"""
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+REACT JSX & COMPONENTS NOTES
+
+================================================
+
+1. JSX (JavaScript XML)
+   ================================================
+
+Definition:
+JSX stands for JavaScript XML. It allows us to write HTML-like code inside JavaScript.
+
+Example:
+
+function App() {
+return <h1>Hello React</h1>;
+}
+
+================================================
+2. JSX Rules
+============
+
+1. One Parent Element
+
+Example:
+
+return (
+
+  <div>
+    <h1>Hello</h1>
+    <p>Welcome</p>
+  </div>
+)
+
+---
+
+2. Close All Tags
+
+<img src="logo.png" />
+<input type="text" />
+
+---
+
+3. Use className
+
+<h1 className="title">Hello</h1>
+
+---
+
+4. Use camelCase Attributes
+
+<button onClick={handleClick}>Click</button>
+
+---
+
+5. JavaScript Inside {}
+
+const name = "Vishal";
+
+<h1>Hello {name}</h1>
+
+---
+
+6. Inline CSS as Object
+
+<h1 style={{color:"red"}}>Hello</h1>
+
+---
+
+7. Comments
+
+{/* This is a comment */}
+
+---
+
+8. Conditions
+
+{isLoggedIn ? "Welcome" : "Login"}
+
+---
+
+9. Lists using map()
+
+fruits.map((fruit,index)=>
+
+  <li key={index}>{fruit}</li>
+)
+
+---
+
+10. Event Handlers
+
+<button onClick={handleClick}>
+  Click Me
+</button>
+
+================================================
+3. COMPONENTS IN REACT
+======================
+
+What is a Component?
+
+A component is a reusable piece of UI.
+
+Example:
+
+App
+│
+├── Header
+├── Navbar
+├── Home
+└── Footer
+
+================================================
+Creating a Functional Component
+===============================
+
+Header.js
+
+function Header() {
+return <h1>Header Component</h1>;
+}
+
+export default Header;
+
+App.js
+
+import Header from "./Header";
+
+function App() {
+return <Header />;
+}
+
+================================================
+Export and Import Meaning
+=========================
+
+Export:
+Make a component available outside the current file.
+
+Import:
+Bring a component from another file into the current file.
+
+Flow:
+
+Header.js
+↓
+export Header
+↓
+App.js
+↓
+import Header
+↓
+
+<Header />
+
+================================================
+Default Export
+==============
+
+Header.js
+
+function Header() {
+return <h1>Header</h1>;
+}
+
+export default Header;
+
+App.js
+
+import Header from "./Header";
+
+Characteristics
+
+✓ One default export per file.
+✓ Import name can be changed.
+
+Example:
+
+import MyHeader from "./Header";
+
+================================================
+Named Export
+============
+
+Header.js
+
+export function Header() {
+return <h1>Header</h1>;
+}
+
+export function Footer() {
+return <h1>Footer</h1>;
+}
+
+App.js
+
+import { Header, Footer } from "./Header";
+
+Characteristics
+
+✓ Multiple exports allowed.
+✓ Names must match exactly.
+
+================================================
+Default + Named Export
+======================
+
+Header.js
+
+function Header() {
+return <h1>Header</h1>;
+}
+
+function Footer() {
+return <h1>Footer</h1>;
+}
+
+export default Header;
+export { Footer };
+
+App.js
+
+import Header, { Footer } from "./Header";
+
+================================================
+Types of Components
+===================
+
+1. Functional Components
+2. Class Components
+
+---
+
+## Functional Component
+
+function Header() {
+return <h1>Hello</h1>;
+}
+
+---
+
+## Class Component
+
+class Header extends Component {
+render() {
+return <h1>Hello</h1>;
+}
+}
+
+================================================
+Difference Between Functional and Class Components
+==================================================
+
+## Functional Component            | Class Component
+
+JavaScript function             | ES6 class
+Uses Hooks                      | Uses lifecycle methods
+Simple and readable             | More code
+No render() method              | Uses render()
+Most commonly used              | Rarely used now
+
+================================================
+Types of Functional Components
+==============================
+
+1. Normal Function
+
+function Header() {
+return <h1>Header</h1>;
+}
+
+---
+
+2. Arrow Function
+
+const Header = () => {
+return <h1>Header</h1>;
+};
+
+---
+
+3. Implicit Return
+
+const Header = () => (
+
+  <h1>Header</h1>
+);
+
+---
+
+4. Component with Props
+
+function Welcome(props) {
+return <h1>Hello {props.name}</h1>;
+}
+
+Usage:
+
+<Welcome name="Vishal" />
+
+---
+
+5. Component with Destructuring
+
+function Welcome({name, age}) {
+return (
+<> <h1>{name}</h1> <h1>{age}</h1>
+</>
+);
+}
+
+---
+
+6. Component with Children
+
+Usage:
+
+<Card>
+  <h1>Hello</h1>
+</Card>
+
+Component:
+
+function Card({children}) {
+return <div>{children}</div>;
+}
+
+================================================
+5. Styling in React
+===================
+
+A. Inline Styling
+
+<h1 style={{color:"red"}}>
+  Hello
+</h1>
+
+---
+
+B. Internal Styling
+
+const headingStyle = {
+color: "blue",
+fontSize: "40px"
+};
+
+<h1 style={headingStyle}>
+  Hello
+</h1>
+
+---
+
+C. External CSS File
+
+App.css
+
+.title{
+color: green;
+}
+
+App.js
+
+import "./App.css";
+
+<h1 className="title">
+  Hello React
+</h1>
+
+================================================
+Difference Between Normal CSS and CSS Modules
+=============================================
+
+Normal CSS
+
+App.css
+
+.title{
+color: green;
+}
+
+App.js
+
+import "./App.css";
+
+<h1 className="title">
+  Hello React
+</h1>
+
+Characteristics
+
+✓ Styles are global.
+✓ Same class names can conflict.
+✓ Suitable for small projects.
+
+---
+
+CSS Modules
+
+App.module.css
+
+.title{
+color: blue;
+}
+
+App.js
+
+import styles from "./App.module.css";
+
+<h1 className={styles.title}>
+  Hello React
+</h1>
+
+Characteristics
+
+✓ Styles are local to the component.
+✓ Prevents class name conflicts.
+✓ Better for medium and large projects.
+
+================================================
+Normal CSS vs CSS Modules
+=========================
+
+## Normal CSS                  | CSS Modules
+
+Global styles               | Local styles
+Class conflicts possible    | No class conflicts
+Simple import               | Imported as object
+className="title"           | className={styles.title}
+Suitable for small apps     | Suitable for large apps

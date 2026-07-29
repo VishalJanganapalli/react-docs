@@ -1,0 +1,449 @@
+=========================================================
+CRUD APPLICATION USING ARRAY + INPUT FIELD
+=========================================================
+
+---------------------------------------------------------
+App.jsx
+---------------------------------------------------------
+
+import { useState } from "react";
+
+function App() {
+
+  // Array State
+  const [tasks, setTasks] = useState([]);
+
+  // Input State
+  const [input, setInput] = useState("");
+
+  // Store editing index
+  const [editIndex, setEditIndex] = useState(null);
+
+
+  // ========================
+  // CREATE
+  // ========================
+  const addTask = () => {
+
+    if (input.trim() === "") return;
+
+    // If editing existing item
+    if (editIndex !== null) {
+
+      const updatedTasks = [...tasks];
+      updatedTasks[editIndex] = input;
+
+      setTasks(updatedTasks);
+      setEditIndex(null);
+
+    } else {
+
+      // Add new task
+      setTasks([...tasks, input]);
+    }
+
+    setInput("");
+  };
+
+
+  // ========================
+  // DELETE
+  // ========================
+  const deleteTask = (index) => {
+
+    const filteredTasks = tasks.filter(
+      (_, i) => i !== index
+    );
+
+    setTasks(filteredTasks);
+  };
+
+
+  // ========================
+  // UPDATE
+  // ========================
+  const editTask = (index) => {
+
+    setInput(tasks[index]);
+    setEditIndex(index);
+
+  };
+
+
+  return (
+    <div>
+
+      <h1>CRUD Application</h1>
+
+      {/* Input Field */}
+      <input
+        type="text"
+        placeholder="Enter Task"
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+      />
+
+      {/* Create / Update Button */}
+      <button onClick={addTask}>
+        {editIndex !== null ? "Update" : "Add"}
+      </button>
+
+
+      {/* READ */}
+      <ul>
+
+        {tasks.map((task, index) => (
+
+          <li key={index}>
+
+            {task}
+
+            <button onClick={() => editTask(index)}>
+              Edit
+            </button>
+
+            <button onClick={() => deleteTask(index)}>
+              Delete
+            </button>
+
+          </li>
+
+        ))}
+
+      </ul>
+
+    </div>
+  );
+}
+
+export default App;
+
+
+=========================================================
+CRUD APPLICATION USING SINGLE OBJECT (USER PROFILE)
+=========================================================
+
+import { useState } from "react";
+
+function App() {
+
+  // Object to display data
+  const [user, setUser] = useState(null);
+
+  // Form state
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    age: ""
+  });
+
+  // To know create or update
+  const [isEditing, setIsEditing] = useState(false);
+
+
+  // Handle Inputs
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+
+  // Submit (Create + Update)
+  const handleSubmit = () => {
+
+    setUser(formData);
+
+    setFormData({
+      name: "",
+      email: "",
+      age: ""
+    });
+
+    setIsEditing(false);
+  };
+
+
+  // Edit
+  const handleEdit = () => {
+
+    setFormData(user);
+
+    setIsEditing(true);
+  };
+
+
+  // Delete
+  const handleDelete = () => {
+
+    setUser(null);
+
+    setFormData({
+      name: "",
+      email: "",
+      age: ""
+    });
+
+    setIsEditing(false);
+  };
+
+
+  return (
+    <div>
+
+      <h1>User Profile</h1>
+
+      <input
+        type="text"
+        name="name"
+        placeholder="Enter Name"
+        value={formData.name}
+        onChange={handleChange}
+      />
+
+      <br /><br />
+
+      <input
+        type="email"
+        name="email"
+        placeholder="Enter Email"
+        value={formData.email}
+        onChange={handleChange}
+      />
+
+      <br /><br />
+
+      <input
+        type="number"
+        name="age"
+        placeholder="Enter Age"
+        value={formData.age}
+        onChange={handleChange}
+      />
+
+      <br /><br />
+
+      <button onClick={handleSubmit}>
+        {isEditing ? "Update" : "Submit"}
+      </button>
+
+
+      <hr />
+
+      <h2>User Details</h2>
+
+      {
+        user && (
+          <>
+            <p>Name : {user.name}</p>
+            <p>Email : {user.email}</p>
+            <p>Age : {user.age}</p>
+
+            <button onClick={handleEdit}>
+              Edit
+            </button>
+
+            <button onClick={handleDelete}>
+              Delete
+            </button>
+          </>
+        )
+      }
+
+    </div>
+  );
+}
+
+export default App;
+
+
+=========================================================
+CRUD APPLICATION USING ARRAY OF OBJECTS (PRODUCT DETAILS)
+=========================================================
+
+Concepts Used
+-------------
+✅ useState
+✅ Array of Objects
+✅ FormData Object
+✅ Dynamic Input Handling
+✅ Create
+✅ Read
+✅ Update
+✅ Delete
+✅ map()
+✅ Spread Operator
+
+---------------------------------------------------------
+App.jsx
+---------------------------------------------------------
+
+import { useState } from "react";
+
+function App() {
+
+  // Array State
+  const [products, setProducts] = useState([]);
+
+  // Form State
+  const [formData, setFormData] = useState({
+    name: "",
+    price: "",
+    category: ""
+  });
+
+  // To know which item is being edited
+  const [editIndex, setEditIndex] = useState(null);
+
+
+  // ========================
+  // HANDLE INPUT CHANGE
+  // ========================
+  const handleChange = (e) => {
+
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+
+  };
+
+
+  // ========================
+  // CREATE + UPDATE
+  // ========================
+  const handleSubmit = () => {
+
+    if (editIndex !== null) {
+
+      // UPDATE
+
+      const updatedProducts = [...products];
+
+      updatedProducts[editIndex] = formData;
+
+      setProducts(updatedProducts);
+
+      setEditIndex(null);
+
+    } else {
+
+      // CREATE
+
+      setProducts([
+        ...products,
+        formData
+      ]);
+
+    }
+
+    // Clear Inputs
+
+    setFormData({
+      name: "",
+      price: "",
+      category: ""
+    });
+
+  };
+
+
+  // ========================
+  // EDIT
+  // ========================
+  const handleEdit = (index) => {
+
+    setFormData(products[index]);
+
+    setEditIndex(index);
+
+  };
+
+
+  // ========================
+  // DELETE
+  // ========================
+  const handleDelete = (index) => {
+
+    const filteredProducts = products.filter(
+      (_, i) => i !== index
+    );
+
+    setProducts(filteredProducts);
+
+  };
+
+
+  return (
+    <div>
+
+      <h1>Product CRUD</h1>
+
+      <input
+        type="text"
+        name="name"
+        placeholder="Product Name"
+        value={formData.name}
+        onChange={handleChange}
+      />
+
+      <br /><br />
+
+      <input
+        type="number"
+        name="price"
+        placeholder="Price"
+        value={formData.price}
+        onChange={handleChange}
+      />
+
+      <br /><br />
+
+      <input
+        type="text"
+        name="category"
+        placeholder="Category"
+        value={formData.category}
+        onChange={handleChange}
+      />
+
+      <br /><br />
+
+      <button onClick={handleSubmit}>
+        {editIndex !== null ? "Update" : "Submit"}
+      </button>
+
+      <hr />
+
+      <h2>Products List</h2>
+
+      {
+        products.map((product, index) => (
+
+          <div key={index}>
+
+            <p>Name : {product.name}</p>
+            <p>Price : {product.price}</p>
+            <p>Category : {product.category}</p>
+
+            <button onClick={() => handleEdit(index)}>
+              Edit
+            </button>
+
+            <button onClick={() => handleDelete(index)}>
+              Delete
+            </button>
+
+            <hr />
+
+          </div>
+
+        ))
+      }
+
+    </div>
+  );
+}
+
+export default App;

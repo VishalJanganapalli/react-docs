@@ -1,0 +1,229 @@
+// services/productService.js
+
+import axios from "axios";
+
+const API_URL = "http://localhost:5000/api/products";
+
+export const searchProducts = async (filters) => {
+  const response = await axios.get(`${API_URL}/search`, {
+    params: filters,
+  });
+
+  return response.data.data;
+};
+
+
+
+
+
+
+// Products.jsx
+
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+function Products() {
+  const navigate = useNavigate();
+
+  const [name, setName] = useState("");
+  const [brand, setBrand] = useState("");
+  const [category, setCategory] = useState("");
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
+
+  const handleSearch = () => {
+    const params = new URLSearchParams();
+
+    if (name) params.append("name", name);
+    if (brand) params.append("brand", brand);
+    if (category) params.append("category", category);
+    if (minPrice) params.append("minPrice", minPrice);
+    if (maxPrice) params.append("maxPrice", maxPrice);
+
+    navigate(`/product-details?${params.toString()}`);
+  };
+
+  return (
+    <div>
+      <h2>Search Products</h2>
+
+      <input
+        type="text"
+        placeholder="Product Name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
+
+      <br /><br />
+
+      <input
+        type="text"
+        placeholder="Brand"
+        value={brand}
+        onChange={(e) => setBrand(e.target.value)}
+      />
+
+      <br /><br />
+
+      <input
+        type="text"
+        placeholder="Category"
+        value={category}
+        onChange={(e) => setCategory(e.target.value)}
+      />
+
+      <br /><br />
+
+      <input
+        type="number"
+        placeholder="Min Price"
+        value={minPrice}
+        onChange={(e) => setMinPrice(e.target.value)}
+      />
+
+      <br /><br />
+
+      <input
+        type="number"
+        placeholder="Max Price"
+        value={maxPrice}
+        onChange={(e) => setMaxPrice(e.target.value)}
+      />
+
+      <br /><br />
+
+      <button onClick={handleSearch}>
+        Search
+      </button>
+    </div>
+  );
+}
+
+export default Products;
+
+
+
+
+
+
+// ProductDetails.jsx
+
+import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import { searchProducts } from "../services/productService";
+
+function ProductDetails() {
+  const [products, setProducts] = useState([]);
+
+  const [searchParams] = useSearchParams();
+
+  const name = searchParams.get("name");
+  const brand = searchParams.get("brand");
+  const category = searchParams.get("category");
+  const minPrice = searchParams.get("minPrice");
+  const maxPrice = searchParams.get("maxPrice");
+
+  useEffect(() => {
+    loadProducts();
+  }, []);
+
+  const loadProducts = async () => {
+    const filters = {};
+
+    if (name) filters.name = name;
+    if (brand) filters.brand = brand;
+    if (category) filters.category = category;
+    if (minPrice) filters.minPrice = minPrice;
+    if (maxPrice) filters.maxPrice = maxPrice;
+
+    const data = await searchProducts(filters);
+
+    setProducts(data);
+  };
+
+  return (
+    <div>
+      <h2>Search Results</h2>
+
+      <p><strong>Name:</strong> {name}</p>
+      <p><strong>Brand:</strong> {brand}</p>
+      <p><strong>Category:</strong> {category}</p>
+      <p><strong>Min Price:</strong> {minPrice}</p>
+      <p><strong>Max Price:</strong> {maxPrice}</p>
+
+      <hr />
+
+      {products.map((product) => (
+        <div key={product.id}>
+          <h3>{product.name}</h3>
+          <p>Brand : {product.brand}</p>
+          <p>Category : {product.category.name}</p>
+          <p>Price : ${product.price}</p>
+
+          <hr />
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default ProductDetails;
+
+
+
+
+
+
+
+// App.jsx
+
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Products from "./Products";
+import ProductDetails from "./ProductDetails";
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Products />} />
+
+        <Route
+          path="/product-details"
+          element={<ProductDetails />}
+        />
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+export default App;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+useState
+useEffect
+useContext
+useParams
+useLocation
+useNavigate
+
+
+Protected Routes
+useReducer
+useMemo
+useCallback
+useRef
+lazyLoading
+virtual scrolling

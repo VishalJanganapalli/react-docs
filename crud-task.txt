@@ -1,0 +1,318 @@
+REACT CRUD PRACTICE TASKS
+
+========================================
+1. ARRAY CRUD TASKS
+========================================
+
+TASK 1 – FAVORITE COLORS MANAGER
+
+Objective:
+Manage a list of favorite colors using React state.
+
+Initial State:
+const [colors, setColors] = useState([
+  "Red",
+  "Blue",
+  "Green"
+]);
+
+Requirements:
+
+CREATE
+- Add a new color from an input field.
+
+READ
+- Display all colors in a list.
+
+UPDATE
+- Edit an existing color.
+
+DELETE
+- Remove a color from the list.
+
+Concepts:
+- useState
+- map()
+- Controlled Components
+- Event Handling
+
+
+----------------------------------------
+
+TASK 2 – SHOPPING LIST
+
+Objective:
+Build a shopping list manager.
+
+Initial State:
+const [items, setItems] = useState([
+  "Milk",
+  "Bread",
+  "Eggs"
+]);
+
+Requirements:
+
+CREATE
+- Add a new shopping item.
+
+READ
+- Display all items.
+
+UPDATE
+- Allow users to rename an item.
+
+DELETE
+- Remove any selected item.
+
+BONUS
+- Display total number of items.
+
+Concepts:
+- useState
+- map()
+- Conditional Rendering
+
+
+========================================
+2. OBJECT CRUD TASKS
+========================================
+
+TASK 3 – USER PROFILE EDITOR
+
+Objective:
+Manage a single user profile object.
+
+Initial State:
+const [user, setUser] = useState({
+  name: "John",
+  email: "john@example.com"
+});
+
+Requirements:
+
+CREATE
+- Add a new property called phone.
+
+READ
+- Display all profile information.
+
+UPDATE
+- Update name and email using input fields.
+
+DELETE
+- Remove the phone property.
+
+Concepts:
+- Object State Updates
+- Spread Operator
+- Controlled Inputs
+
+
+----------------------------------------
+
+TASK 4 – PRODUCT INFORMATION PANEL
+
+Objective:
+Manage product details.
+
+Initial State:
+const [product, setProduct] = useState({
+  name: "Laptop",
+  price: 50000,
+  stock: 10
+});
+
+Requirements:
+
+CREATE
+- Add a category field.
+
+READ
+- Display all product details.
+
+UPDATE
+- Update price and stock.
+
+DELETE
+- Remove category from state.
+
+BONUS
+- Display "Out of Stock" when stock becomes 0.
+
+Concepts:
+- Object State Updates
+- Conditional Rendering
+- Controlled Components
+
+
+========================================
+3. ARRAY OF OBJECTS CRUD TASKS
+========================================
+
+TASK 5 – STUDENT MANAGEMENT SYSTEM
+
+Objective:
+Manage student records.
+
+Initial State:
+const [students, setStudents] = useState([
+  { id: 1, name: "Alice", grade: "A" },
+  { id: 2, name: "Bob", grade: "B" }
+]);
+
+Requirements:
+
+CREATE
+- Add a new student using a form.
+
+READ
+- Display all students in a table.
+
+UPDATE
+- Edit a student's grade.
+
+DELETE
+- Remove a student.
+
+Concepts:
+- map()
+- Form Handling
+- Immutable Updates
+
+
+----------------------------------------
+
+TASK 6 – EMPLOYEE DIRECTORY
+
+Objective:
+Build an employee management application.
+
+Initial State:
+const [employees, setEmployees] = useState([
+  { id: 1, name: "Ravi", department: "IT" },
+  { id: 2, name: "Priya", department: "HR" }
+]);
+
+Requirements:
+
+CREATE
+- Add a new employee.
+
+READ
+- Display all employees.
+
+UPDATE
+- Change employee department.
+
+DELETE
+- Remove employee by id.
+
+BONUS
+- Add a search box to filter employees by name.
+
+Concepts:
+- useState
+- map()
+- filter()
+- Form Handling
+
+
+========================================
+4. TODO APPLICATION
+========================================
+
+TASK 7 – TODO APPLICATION
+
+Objective:
+Build a complete Todo CRUD application.
+
+Initial State:
+const [todos, setTodos] = useState([
+  {
+    id: 1,
+    text: "Learn React",
+    completed: false
+  }
+]);
+
+Requirements:
+
+CREATE
+- Add a new todo.
+
+READ
+- Display all todos.
+
+UPDATE
+- Edit todo text.
+- Toggle completed status.
+
+DELETE
+- Delete a todo.
+
+BONUS
+- Show total todos.
+- Show completed todos.
+- Show pending todos.
+
+Concepts:
+- useState
+- map()
+- filter()
+- Derived State
+- Conditional Styling
+
+
+========================================
+5. MOVIE COLLECTION MANAGER
+========================================
+
+TASK 8 – MOVIE COLLECTION MANAGER
+
+Objective:
+Manage a movie collection using CRUD operations.
+
+Initial State:
+const [movies, setMovies] = useState([
+  {
+    id: 1,
+    title: "Inception",
+    rating: 9
+  },
+  {
+    id: 2,
+    title: "Interstellar",
+    rating: 10
+  }
+]);
+
+Requirements:
+
+CREATE
+- Add a movie with title and rating.
+
+READ
+- Display all movies.
+
+UPDATE
+- Edit title or rating.
+
+DELETE
+- Remove a movie.
+
+BONUS
+- Filter movies with rating greater than 8.
+- Sort movies by rating.
+
+Concepts:
+- CRUD Operations
+- Arrays of Objects
+- Form Handling
+- Filtering
+- Sorting
+- React State Management
+
+========================================
+END OF TASKS
+========================================

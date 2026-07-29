@@ -1,0 +1,282 @@
+============================================================
+1. WHAT IS STATE MANAGEMENT?
+============================================================
+State management in React is the process of storing, updating, and sharing data that changes over time in your application.
+State represents information that can change, and when it changes, React automatically re-renders the affected components.
+
+
+============================================================
+2. WHY STATE MANAGEMENT IS IMPORTANT 
+============================================================
+
+State management helps you:
+
+- Keep track of user input (forms)
+- Show or hide UI elements (modals, menus) - conditional rendering
+- Store fetched API data
+- Manage authentication (login/logout)
+- Share data between multiple components
+
+
+============================================================
+3. TYPES OF STATE MANAGEMENT IN REACT
+============================================================
+
+1. LOCAL STATE
+----------------
+- Managed inside a single component
+- Uses hooks like useState
+
+2. SHARED STATE
+----------------
+- Shared between parent and child components
+- Passed using props
+
+3. GLOBAL STATE
+----------------
+- Used when many components need same data
+- Common tools: useContext, useReducer
+
+
+============================================================
+4. COMMUNICATION BETWEEN COMPONENTS (STATE FLOW)
+============================================================
+A. In React, parent-child communication is how components exchange data and interact with each other. 
+   React uses a one-way data flow, meaning data normally flows from parent to child through props. 
+   When a child needs to communicate back to its parent, it does so by calling a function passed down from the parent.
+
+   1. Parent → Child (Using Props)
+      A parent passes data to a child using props.
+
+      Parent Component
+        function Parent() {
+        return <Child name="Alice" />;
+        }
+      Child Component
+        function Child(props) {
+        return <h1>Hello, {props.name}</h1>;
+        }
+
+    2. Child → Parent (Using Callback Functions)
+       Since data flows downward, a child cannot directly update the parent's state. 
+       Instead, the parent passes a function to the child, and the child calls that function.
+
+       Parent Component
+       import { useState } from "react";
+
+        function Parent() {
+        const [message, setMessage] = useState("");
+
+        const receiveMessage = (text) => {
+            setMessage(text);
+        };
+
+        return (
+            <>
+            <h2>{message}</h2>
+            <Child sendMessage={receiveMessage} />
+            </>
+        );
+        }
+
+        Child Component
+        function Child({ sendMessage }) {
+        return (
+            <button onClick={() => sendMessage("Hello Parent!")}>
+            Send Message
+            </button>
+        );
+        }
+
+
+    3. Communication Between Sibling Components
+       Two sibling components cannot communicate directly.
+       Parent
+        ├── Child A
+        └── Child B
+
+        import { useState } from "react";
+
+        function Parent() {
+        const [text, setText] = useState("");
+
+        return (
+            <>
+            <ChildA updateText={setText} />
+            <ChildB text={text} />
+            </>
+        );
+        }
+
+        function ChildA({ updateText }) {
+        return (
+            <button onClick={() => updateText("React is awesome!")}>
+            Update
+            </button>
+        );
+        }
+
+        function ChildB({ text }) {
+        return <h2>{text}</h2>;
+        }
+
+
+        Real-World Example :
+
+        Imagine a shopping app:
+
+        App (Parent)
+        │
+        ├── ProductList (Child)
+        ├── Cart (Child)
+        └── Header (Child)
+        App stores the cart items in its state.
+        ProductList adds an item by calling a function provided by App.
+        App updates the cart state.
+        Cart and Header automatically receive the updated cart through props and display the latest information.
+
+
+        Key Points to Remember : 
+            Props are used to send data from parent to child.
+            Props are read-only; a child should not modify them.
+            Callback functions let a child communicate back to the parent.
+            Sibling components communicate through their common parent.
+            React follows one-way data flow: parent → child. Any updates from a child happen by asking the parent to update its own state.
+
+    
+============================================================
+5. WHAT IS STATE LIFTING
+============================================================
+A. State lifting (or lifting state up) is a React pattern where you move state from a child component
+   to the closest common parent so that multiple components can share and stay synchronized with the same data.
+   child-to-child communication is the problem, while state lifting is the solution.
+
+   Suppose you're building a simple app.
+
+    App
+    ├── Input
+    └── Display
+    -Input: User types a name.
+    -Display: Shows the typed name.
+
+    User types in Input
+        │
+        ▼
+      Input  ─────────►  Display
+         ❌ Direct communication is not possible
+
+    If the state is inside Input:
+
+    Input.jsx
+    import { useState } from "react";
+
+    function Input() {
+    const [name, setName] = useState("");
+
+    return (
+        <input
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        />
+    );
+    }
+
+    Display.jsx
+    function Display() {
+      return <h2>How do I get the name?</h2>;
+    }
+
+    Here:
+
+    Input has the state.
+    Display needs the state.
+    But Display cannot access Input's state.
+
+    This is the child-to-child communication problem.
+
+    2. State Lifting (The Solution)
+    Move the state to the parent.
+
+    App.jsx
+    import { useState } from "react";
+    import Input from "./Input";
+    import Display from "./Display";
+
+    function App() {
+    const [name, setName] = useState("");
+
+    return (
+        <>
+        <Input name={name} setName={setName} />
+        <Display name={name} />
+        </>
+    );
+    }
+
+    export default App;
+
+    Input.jsx
+    function Input({ name, setName }) {
+    return (
+        <input
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        />
+    );
+    }
+
+    export default Input;
+
+    Display.jsx
+    function Display({ name }) {
+    return <h2>Hello {name}</h2>;
+    }
+
+    export default Display;
+
+
+    Visual Difference
+    Child-to-Child Communication (Requirement)
+            App
+        /   \
+    Input   Display
+
+    Input wants to send data directly to Display
+            ❌ Not possible
+            
+    State Lifting (Solution)
+            App
+    (name state lives here)
+        /              \
+    Input              Display
+        ▲                 ▲
+        │                 │
+    updates state     receives props
+
+
+
+Simple Way to Remember : 
+Parent → Child = Props
+Child → Parent = Callback function
+Child ↔ Child = State lifting (via the parent)
+
+
+
+Interview Questions : 
+
+1. What is state in React?
+2. What is state management in React?
+3. What are props in React?
+4. What is the difference between state and props?
+5. What is one-way data flow in React?
+6. How does parent-to-child communication work in React?
+7. How does child-to-parent communication work in React?
+8. Can sibling components communicate directly in React?
+9. If not, how do sibling components communicate?
+10. What is state lifting in React?
+11. Why do we need state lifting?
+12. When should we use state lifting?
+13. What problem does state lifting solve?
+14. Is state lifting the same as child-to-child communication? Explain
+15. Difference between local state and shared (global) state?
+16. Difference between UI state and server state?

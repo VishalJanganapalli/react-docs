@@ -1,0 +1,61 @@
+** What is React ?
+A: React is a Frontend JavaScript Library which is used to built ui(frontend) and for building single page applications.
+   Developed By Facebook in the year 2013.
+   Stable version of REACT is 18.2.0
+   Websites built on REACT :  Facebook, Instagram, Netflix, Airbnb, Youtube etc...
+
+
+** What is a Single page application ?
+A: An application which loads only once is known as single page application
+   when ever we chnage the page or navigate to other pages it dont refreshs the pages
+   it will just replace the content with current HTML with new HTML.
+
+
+** Differences between Single-page application and normal application(multipage) ?
+A: SPA : 
+   Loads one HTML page initially
+   Updates content dynamically without full reload
+   Usually faster
+   Server Requests Mostly API calls (JSON)
+
+   MPA : 
+   Loads a new HTML page for each request
+   Full page reload on every navigation
+   Usually slower due to page refreshes
+   Server Requests Requests entire HTML pages
+
+
+** What are the features of React ?
+A: Component based structure.
+   Open Source Library
+   Single Page Application (SPA) Support
+   Reusable Components
+   Virtual DOM for Fast Rendering -> DIFFING ALGORITHM
+   One-Way Data Flow (Parent -> Child)
+   JSX (JavaScript XML)
+   Code Reusability and Maintainability
+
+
+** Differences between Library and Framework ?
+A: Library : 
+   A collection of reusable functions and components used to perform specific tasks.
+   Developer controls the flow of the application.
+   More flexible; choose your own tools and architecture.
+   Your code depends on the library.
+   Easier to learn.
+   High customization.
+   Example : React, jQuery, Lodash
+
+   Framework : 
+   A complete structure or foundation for building applications.
+   Framework controls the flow and calls your code when needed.
+   Less flexible; follows predefined rules and architecture.
+   Provides a complete solution for application development, but the framework depends on your code.
+   Comparatively steeper learning curve.
+   Limited customization.
+   Example : Angular, Django, Spring Boot
+
+
+
+
+

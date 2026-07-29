@@ -1,0 +1,124 @@
+What is useCallback ? 
+useCallback is a built-in React Hook designed for performance optimization.
+While useMemo caches the result of a function, useCallback caches the function definition itself between re-renders.
+
+
+1. The Core Problem: Function Equality in JavaScript
+   In JavaScript, functions are objects. Every time a React component re-renders, 
+   any function defined inside its body is re-created from scratch with a brand-new reference in memory:
+
+   Most of the time, creating new functions on re-render is completely harmless and super fast. 
+   However, it causes performance issues in two specific scenarios:
+
+   Passing functions as props to child components optimized with React.memo. 
+   Because the function reference changes on every render, the child thinks its props changed and re-renders anyway.
+
+   Using functions inside dependency arrays of useEffect or other hooks. 
+   A changing function reference causes the effect to trigger on every single render, often creating infinite loops.
+
+
+
+2. Syntax & How It Works
+
+useCallback takes two arguments:
+The function you want to cache.
+A dependency array listing any variables inside the component that the function relies on.
+
+import { useCallback } from 'react';
+
+const memoizedFunction = useCallback(() => {
+  // Your function logic here
+  doSomething(a, b);
+}, [a, b]); // Only recreate this function if 'a' or 'b' change
+
+
+First Render: React stores the initial function reference.
+
+Subsequent Renders:
+Dependencies haven't changed? React ignores the newly created function inline and hands you back the exact same function reference from the previous render.
+Dependencies changed? React updates the reference to the new function definition so it can capture the updated state/props.
+
+
+| Feature  | `React.memo`                | `useMemo`                         | `useCallback`                  |
+| -------- | --------------------------- | --------------------------------- | ------------------------------ |
+| Memoizes | Component rendering         | Computed value                    | Function                       |
+| Used for | Preventing child re-renders | Avoiding expensive recalculations | Preventing function recreation |
+| Works on | Components                  | Values                            | Functions                      |
+
+
+
+
+Preventing Unnecessary Child Re-renders : 
+
+without callback : 
+import React, { useState } from 'react';
+
+// Child component wrapped in React.memo (should only re-render if props change)
+const HeavyList = React.memo(({ onDeleteItem }) => {
+  console.log('HeavyList rendered!');
+  return <div>List of items...</div>;
+});
+
+function ParentDashboard() {
+  const [count, setCount] = useState(0);
+
+  // 🔴 Problem: Re-created on EVERY render of ParentDashboard
+  const handleDelete = (id) => {
+    console.log('Deleting item:', id);
+  };
+
+  return (
+    <div>
+      {/* Clicking this updates 'count', re-rendering ParentDashboard */}
+      <button onClick={() => setCount(count + 1)}>Count: {count}</button>
+
+      {/* HeavyList re-renders unnecessarily because 'onDeleteItem' is a NEW function reference every time */}
+      <HeavyList onDeleteItem={handleDelete} />
+    </div>
+  );
+}
+
+
+
+with callback : 
+import React, { useState, useCallback } from 'react';
+
+const HeavyList = React.memo(({ onDeleteItem }) => {
+  console.log('HeavyList rendered!');
+  return <div>List of items...</div>;
+});
+
+function ParentDashboard() {
+  const [count, setCount] = useState(0);
+
+  // 🟢 Solution: Memoize the function reference
+  const handleDelete = useCallback((id) => {
+    console.log('Deleting item:', id);
+  }, []); // Empty deps: function reference NEVER changes across renders
+
+  return (
+    <div>
+      <button onClick={() => setCount(count + 1)}>Count: {count}</button>
+
+      {/* HeavyList does NOT re-render when count updates! */}
+      <HeavyList onDeleteItem={handleDelete} />
+    </div>
+  );
+}
+
+
+
+
+When NOT to Use useCallback?
+
+Just like useMemo, overusing useCallback adds unnecessary clutter without real benefit.
+
+Passing callbacks to standard HTML elements (<button onClick={...}>): HTML elements don't care about reference equality. 
+useCallback offers zero performance gain here.
+
+Child components not wrapped in React.memo: If the child component re-renders on every parent render anyway, 
+keeping the callback reference stable accomplishes nothing.
+
+Simple, inline functions: The cognitive overhead and memory cost of creating the useCallback wrapper
+is often higher than simply re-creating a small function.
+

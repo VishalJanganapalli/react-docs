@@ -1,0 +1,184 @@
+==========================================================
+useContext Tasks (1 - 5)
+==========================================================
+
+==========================================================
+TASK 1: User Profile Context (Beginner)
+==========================================================
+
+Objective:
+Create a UserContext that stores user information.
+
+Requirements:
+Store:
+- User Name
+- Email
+- Role
+
+Features:
+- Display user information in a Navbar.
+- Display the same information on the Profile page.
+- Add an "Update Name" button to change the user's name.
+
+Concepts Practiced:
+- Creating Context
+- Providing data
+- Accessing Context
+- Updating Context
+
+
+==========================================================
+TASK 2: Theme Switcher
+==========================================================
+
+Objective:
+Create a ThemeContext.
+
+Requirements:
+Store:
+- Theme ("light" or "dark")
+
+Features:
+- Create a Toggle Theme button.
+- The entire application should automatically change its background color based on the selected theme.
+
+Example:
+
+Light Mode:
+- White background
+- Dark text
+
+Dark Mode:
+- Dark background
+- White text
+
+Concepts Practiced:
+- Shared state
+- Updating Context
+- Consuming Context in multiple components
+
+
+==========================================================
+TASK 3: Shopping Cart
+==========================================================
+
+Objective:
+Create a CartContext.
+
+Requirements:
+Store:
+- Cart Items
+
+Functions:
+- Add Item
+- Remove Item
+- Clear Cart
+
+Features:
+- Show Cart Count in Navbar.
+- Show Cart Items in Cart Page.
+- Update cart count whenever an item is added or removed.
+
+Concepts Practiced:
+- Arrays in Context
+- Updating arrays
+- Sharing functions
+- Managing global state
+
+
+==========================================================
+TASK 4: Notification System
+==========================================================
+
+Objective:
+Create a NotificationContext.
+
+Requirements:
+Store:
+- Notification Message
+- Notification Type
+
+Notification Types:
+- Success
+- Error
+- Warning
+
+Functions:
+- Show Notification
+- Hide Notification
+
+Features:
+- When a user clicks Save, display a success notification.
+- Notification should automatically disappear after some time.
+
+Example:
+
+Success:
+"Profile updated successfully"
+
+Error:
+"Something went wrong"
+
+Concepts Practiced:
+- Objects in Context
+- Conditional rendering
+- Shared UI state
+
+
+==========================================================
+TASK 6: API + Context (Todos CRUD)
+==========================================================
+
+Objective:
+Create a TodoContext to manage todo data using API calls.
+
+Requirements:
+
+Fetch todos from an API.
+
+Store:
+- Todos
+- Loading
+- Error
+
+
+CRUD Operations:
+
+Create:
+- Add a new todo using API.
+- Update Context state after adding.
+
+Read:
+- Fetch todos from API.
+- Display todo list.
+
+Update:
+- Edit an existing todo.
+- Update Context state after editing.
+
+Delete:
+- Delete a todo using API.
+- Remove the deleted todo from Context state.
+
+
+Display Todos On:
+- Home Page
+- Todo List Page
+- Todo Details Page
+
+
+Features:
+- The API should be called only once when the application loads.
+- All components should access todo data from Context.
+- Show loading message while fetching data.
+- Show error message if API fails.
+
+
+Concepts Practiced:
+- API calls
+- CRUD operations
+- Loading state
+- Error handling
+- Sharing API response through Context
+- Updating Context data after API operations
+- Managing arrays in Context

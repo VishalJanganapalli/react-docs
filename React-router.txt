@@ -1,0 +1,1065 @@
+=========================================
+REACT ROUTING
+=========================================
+
+WHAT IS ROUTING?
+
+Routing is the process of navigating between different pages or views in a React application without reloading the entire web page.
+React applications are called Single Page Applications (SPA). 
+Instead of loading a new HTML page every time, React updates only the required components.
+
+Example URLs:
+
+/                 -> Home Page
+/about            -> About Page
+/contact          -> Contact Page
+/products         -> Products Page
+/profile          -> Profile Page
+
+Each URL displays a different React component.
+
+-----------------------------------------
+
+WHY DO WE NEED ROUTING?
+
+Without routing:
+
+• Everything would appear on one page.
+• Navigation becomes difficult.
+• Browser Back button won't work properly.
+• URLs cannot be shared easily.
+• Users cannot bookmark pages.
+
+With routing:
+
+• Different pages have different URLs.
+• Navigation is faster.
+• No full page refresh.
+• Better user experience.
+• Browser history works correctly.
+
+-----------------------------------------
+
+INSTALLATION
+
+Install React Router DOM 
+COMMAND - npm install react-router-dom
+
+-----------------------------------------
+
+FOLDER STRUCTURE
+
+src/
+|
+|-- main.jsx
+|-- App.jsx
+|
+|-- pages/
+|   |-- Home.jsx
+|   |-- About.jsx
+|   |-- Contact.jsx
+|   |-- Products.jsx
+|
+|-- components/
+    |-- Navbar.jsx
+    |-- Footer.jsx
+
+-----------------------------------------
+
+STEP 1 : BrowserRouter
+
+main.jsx
+
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+
+import { BrowserRouter } from "react-router-dom";
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+
+<BrowserRouter>
+<App />
+</BrowserRouter>
+
+);
+
+BrowserRouter enables routing using the browser's History API.
+
+Responsibilities:
+
+• Stores browser history
+• Changes URL
+• Supports Back button
+• Supports Forward button
+• Updates components based on URL
+
+-----------------------------------------
+
+STEP 2 : Create Routes
+
+App.jsx
+
+import { Routes, Route } from "react-router-dom";
+
+function App(){
+    return(
+        <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+        </Routes>
+    );
+}
+
+-----------------------------------------
+
+ROUTE COMPONENT
+
+Syntax
+
+<Route path="/about" element={<About />} />
+
+path - Specifies URL.
+element - Specifies which component should render.
+
+Example
+URL - /about
+↓
+Component - <About />
+
+-----------------------------------------
+
+LINK COMPONENT
+
+Instead of using <a href="/about">about</a>
+
+Use
+import { Link } from "react-router-dom";
+
+<Link to="/about">About</Link>
+
+Why?
+
+Anchor tag reloads the entire page.
+Link changes URL without refreshing.
+
+-----------------------------------------
+
+NAVLINK
+
+NavLink works like Link.
+
+Difference:
+
+NavLink knows which route is active.
+
+Example
+
+import { NavLink } from "react-router-dom";
+
+<NavLink to="/about"> About </NavLink>
+
+-----------------------------------------
+
+ACTIVE NAVLINK
+
+<NavLink to="/about" className={({isActive})=> isActive ? "active" : "" } > About </NavLink>
+
+If About page is active CSS class active will be added automatically.
+
+-----------------------------------------
+
+COMMON NAVBAR
+
+import { Link } from "react-router-dom";
+
+function Navbar(){
+    return(
+        <nav>
+            <Link to="/">Home</Link>
+            <Link to="/about">About</Link>
+            <Link to="/contact">Contact</Link>
+        </nav>
+    );
+}
+
+-----------------------------------------
+
+404 PAGE
+
+<Route path="*" element={<NotFound />} />
+
+* means - Match every unknown URL.
+
+Example
+
+/random
+/hello
+/testing
+
+will display - NotFound Component
+
+-----------------------------------------
+
+PROGRAMMATIC NAVIGATION
+
+useNavigate()
+
+import { useNavigate } from "react-router-dom";
+
+const navigate = useNavigate();
+
+navigate("/about");
+
+Moves user to About page.
+
+Go Back - navigate(-1);
+
+Go Forward - navigate(1);
+
+Replace History
+
+navigate("/login",{replace:true});
+
+Current page won't remain in browser history.
+
+-----------------------------------------
+
+
+
+=========================================
+NESTED ROUTES, OUTLET,
+DYNAMIC ROUTES,
+URL PARAMETERS,
+QUERY PARAMETERS,
+ROUTE LAYOUTS
+=========================================
+
+NESTED ROUTES
+
+Nested routing allows one route to contain child routes.
+
+Example Structure
+
+Dashboard
+|
+|-- Profile
+|
+|-- Settings
+|
+|-- Users
+
+URLS
+
+/dashboard
+/dashboard/profile
+/dashboard/settings
+/dashboard/users
+
+-----------------------------------------
+
+CREATING NESTED ROUTES
+
+import { Routes, Route } from "react-router-dom";
+
+<Routes>
+    <Route path="/dashboard" element={<Dashboard />} >
+        <Route path="profile" element={<Profile />} />
+        <Route path="settings" element={<Settings />} />
+        <Route path="users" element={<Users />} />
+    </Route>
+</Routes>
+
+Notice:
+
+Child paths DO NOT start with "/"
+
+Correct - profile, settings, users,
+Incorrect /profile, /settings, /users
+
+-----------------------------------------
+
+OUTLET
+
+Nested routes require Outlet.
+
+Example
+
+import { Outlet } from "react-router-dom";
+
+function Dashboard(){
+
+return(
+
+<>
+
+<h1>Dashboard</h1>
+
+<Outlet />
+
+</>
+
+);
+
+}
+
+Outlet displays child routes.
+Without Outlet Child routes will never appear.
+
+-----------------------------------------
+
+NESTED ROUTE EXAMPLE
+
+Current URL
+
+/dashboard/profile
+
+Dashboard Component
+
+↓
+
+Profile Component
+
+Output
+
+Dashboard
+
+Profile
+
+-----------------------------------------
+
+DYNAMIC ROUTES
+
+Sometimes URLs contain IDs.
+
+Examples
+
+/products/1
+
+/products/2
+
+/products/50
+
+Instead of creating many routes
+
+<Route path="/products/1" />
+
+<Route path="/products/2" />
+
+<Route path="/products/3" />
+
+Use one route
+
+<Route
+
+path="/products/:id"
+
+element={<Product />}
+
+/>
+
+:id
+
+means dynamic value.
+
+-----------------------------------------
+
+USEPARAMS
+
+Read dynamic values.
+
+Example
+
+import { useParams } from "react-router-dom";
+
+function Product(){
+
+const { id } = useParams();
+
+return(
+
+<h1>
+
+Product ID : {id}
+
+</h1>
+
+);
+
+}
+
+If URL is
+
+/products/45
+
+Output
+
+Product ID : 45
+
+-----------------------------------------
+
+MULTIPLE PARAMETERS
+
+URL
+
+/users/10/orders/25
+
+Route
+
+<Route
+
+path="/users/:userId/orders/:orderId"
+
+element={<Order />}
+
+/>
+
+Read values
+
+const { userId, orderId } = useParams();
+
+Output
+
+userId = 10
+
+orderId = 25
+
+-----------------------------------------
+
+URL PARAMETERS
+
+Example
+
+/blog/react-routing
+
+Route
+
+<Route
+
+path="/blog/:slug"
+
+element={<Blog />}
+
+/>
+
+slug
+
+contains
+
+react-routing
+
+-----------------------------------------
+
+QUERY PARAMETERS
+
+Query parameters are values after ?
+
+Example
+
+/search?name=laptop
+
+/search?name=laptop&price=50000
+
+-----------------------------------------
+
+READ QUERY PARAMETERS
+
+import {
+
+useSearchParams
+
+}
+
+from "react-router-dom";
+
+const [searchParams] = useSearchParams();
+
+const name = searchParams.get("name");
+
+const price = searchParams.get("price");
+
+If URL
+
+/search?name=phone&price=20000
+
+Output
+
+name
+
+phone
+
+price
+
+20000
+
+-----------------------------------------
+
+UPDATE QUERY PARAMETERS
+
+const [searchParams,setSearchParams]
+
+=
+
+useSearchParams();
+
+setSearchParams({
+
+name:"Laptop",
+
+price:"70000"
+
+});
+
+New URL
+
+/search?name=Laptop&price=70000
+
+-----------------------------------------
+
+LAYOUT ROUTES
+
+Many pages share
+
+Navbar
+
+Footer
+
+Sidebar
+
+Instead of repeating them
+
+Use Layout.
+
+Example
+
+function Layout(){
+
+return(
+
+<>
+
+<Navbar />
+
+<Outlet />
+
+<Footer />
+
+</>
+
+);
+
+}
+
+-----------------------------------------
+
+USING LAYOUT
+
+<Routes>
+
+<Route
+
+path="/"
+
+element={<Layout />}
+
+>
+
+<Route
+
+index
+
+element={<Home />}
+
+/>
+
+<Route
+
+path="about"
+
+element={<About />}
+
+/>
+
+<Route
+
+path="contact"
+
+element={<Contact />}
+
+/>
+
+</Route>
+
+</Routes>
+
+Layout appears once.
+
+Only Outlet changes.
+
+-----------------------------------------
+
+INDEX ROUTE
+
+Instead of
+
+path=""
+
+Use
+
+index
+
+Example
+
+<Route
+
+index
+
+element={<Home />}
+
+/>
+
+Means
+
+Default child route.
+
+-----------------------------------------
+
+ABSOLUTE VS RELATIVE PATHS
+
+Absolute
+
+/about
+
+Starts from root.
+
+Relative
+
+about
+
+Starts from parent route.
+
+-----------------------------------------
+
+LINKING TO CHILD ROUTES
+
+Inside Dashboard
+
+<Link to="profile">
+
+Profile
+
+</Link>
+
+Current URL
+
+/dashboard
+
+After clicking
+
+/dashboard/profile
+
+-----------------------------------------
+
+LINKING TO PARENT
+
+<Link to="..">
+
+Go Back
+
+</Link>
+
+-----------------------------------------
+
+SUMMARY
+
+Nested Routes
+
+One route inside another.
+
+Outlet
+
+Displays child components.
+
+Dynamic Routes
+
+Accept variable values.
+
+useParams()
+
+Reads route parameters.
+
+useSearchParams()
+
+Reads query strings.
+
+Layout Routes
+
+Reuse Navbar, Sidebar and Footer.
+
+Index Route
+
+Default child page.
+
+-----------------------------------------
+
+END OF PART 2
+
+
+
+
+
+=========================================
+PART 3
+PROTECTED ROUTES,
+REDIRECTS,
+LAZY LOADING,
+MODERN ROUTING,
+LOADERS,
+ACTIONS,
+ERROR BOUNDARIES
+=========================================
+
+PROTECTED ROUTES
+
+Protected routes allow only authenticated users to access certain pages.
+
+Example
+
+import { Navigate } from "react-router-dom";
+
+function ProtectedRoute({ children }) {
+  const isLoggedIn = true;
+  return isLoggedIn ? children : <Navigate to="/login" replace />;
+}
+
+-----------------------------------------
+
+USING PROTECTED ROUTES
+
+<Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+
+If the user is logged in, Dashboard is displayed.
+Otherwise, the user is redirected to the Login page.
+
+-----------------------------------------
+
+ROLE BASED PROTECTED ROUTES
+
+function AdminRoute({ children }) {
+  const user = { role: "admin" };
+  return user.role === "admin"
+    ? children
+    : <Navigate to="/unauthorized" replace />;
+}
+
+Usage
+
+<Route path="/admin" element={<AdminRoute><AdminPanel /></AdminRoute>} />
+
+-----------------------------------------
+
+REDIRECTING USERS
+
+Navigate component redirects users.
+
+<Route path="/old-about" element={<Navigate to="/about" replace />} />
+
+Visiting
+
+/old-about
+
+Automatically redirects to
+
+/about
+
+-----------------------------------------
+
+PROGRAMMATIC REDIRECT
+
+import { useNavigate } from "react-router-dom";
+
+function Login() {
+  const navigate = useNavigate();
+
+  function login() {
+    // Login successful
+    navigate("/dashboard");
+  }
+}
+
+-----------------------------------------
+
+PASSING STATE WHILE NAVIGATING
+
+navigate("/profile", {
+  state: {
+    name: "Rahul",
+    age: 22
+  }
+});
+
+-----------------------------------------
+
+READING NAVIGATION STATE
+
+import { useLocation } from "react-router-dom";
+
+const location = useLocation();
+
+console.log(location.state);
+
+Output
+
+{
+  name: "Rahul",
+  age: 22
+}
+
+-----------------------------------------
+
+LAZY LOADING
+
+Large applications should not load every page initially.
+
+Instead, load pages only when required.
+
+-----------------------------------------
+
+IMPORTING LAZY COMPONENTS
+
+import { lazy } from "react";
+
+const Home = lazy(() => import("./Home"));
+const About = lazy(() => import("./About"));
+const Contact = lazy(() => import("./Contact"));
+
+-----------------------------------------
+
+SUSPENSE
+
+import { Suspense } from "react";
+
+<Suspense fallback={<h2>Loading...</h2>}>
+  <Home />
+</Suspense>
+
+fallback displays a loading UI until the component finishes loading.
+
+-----------------------------------------
+
+LAZY ROUTES
+
+<Route path="/" element={<Suspense fallback={<h2>Loading...</h2>}><Home /></Suspense>} />
+
+<Route path="/about" element={<Suspense fallback={<h2>Loading...</h2>}><About /></Suspense>} />
+
+<Route path="/contact" element={<Suspense fallback={<h2>Loading...</h2>}><Contact /></Suspense>} />
+
+-----------------------------------------
+
+WHY LAZY LOADING?
+
+Advantages
+
+• Faster initial loading
+• Smaller JavaScript bundle
+• Better performance
+• Loads only the required page
+• Improves user experience
+
+-----------------------------------------
+
+MODERN ROUTING
+
+React Router recommends using createBrowserRouter() for new applications.
+
+-----------------------------------------
+
+CREATING ROUTER
+
+import { createBrowserRouter } from "react-router-dom";
+
+const router = createBrowserRouter([
+  { path: "/", element: <Home /> },
+  { path: "/about", element: <About /> },
+  { path: "/contact", element: <Contact /> }
+]);
+
+-----------------------------------------
+
+ROUTER PROVIDER
+
+import { RouterProvider } from "react-router-dom";
+
+<RouterProvider router={router} />
+
+RouterProvider replaces BrowserRouter when using the Data Router API.
+
+-----------------------------------------
+
+ROUTE OBJECTS
+
+Instead of writing
+
+<Route path="/" element={<Home />} />
+
+You can write
+
+{
+  path: "/",
+  element: <Home />
+}
+
+Each object represents one route.
+
+-----------------------------------------
+
+LOADERS
+
+Loaders fetch data before rendering a page.
+
+import { createBrowserRouter } from "react-router-dom";
+
+const router = createBrowserRouter([
+  {
+    path: "/users",
+    element: <Users />,
+    loader: async () => {
+      return fetch("/api/users");
+    }
+  }
+]);
+
+-----------------------------------------
+
+READING LOADER DATA
+
+import { useLoaderData } from "react-router-dom";
+
+function Users() {
+  const users = useLoaderData();
+
+  return (
+    <div>
+      {JSON.stringify(users)}
+    </div>
+  );
+}
+
+-----------------------------------------
+
+WHY USE LOADERS?
+
+Advantages
+
+• Fetch data before rendering
+• Avoid unnecessary loading states
+• Keep routing and data together
+• Better performance
+
+-----------------------------------------
+
+ACTIONS
+
+Actions handle form submissions.
+
+const router = createBrowserRouter([
+  {
+    path: "/contact",
+    element: <Contact />,
+    action: async ({ request }) => {
+      const formData = await request.formData();
+      return formData;
+    }
+  }
+]);
+
+-----------------------------------------
+
+FORM COMPONENT
+
+import { Form } from "react-router-dom";
+
+<Form method="post">
+  <input type="text" name="username" />
+  <button type="submit">Submit</button>
+</Form>
+
+Submitting the form automatically calls the route action.
+
+-----------------------------------------
+
+ERROR BOUNDARIES
+
+Handle route-specific errors.
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Home />,
+    errorElement: <ErrorPage />
+  }
+]);
+
+-----------------------------------------
+
+READ ROUTE ERRORS
+
+import { useRouteError } from "react-router-dom";
+
+function ErrorPage() {
+  const error = useRouteError();
+
+  return <h2>{error.statusText}</h2>;
+}
+
+-----------------------------------------
+
+WHEN ERROR BOUNDARIES RUN
+
+• Loader throws an error
+• Action throws an error
+• Route rendering fails
+• Resource is not found
+
+-----------------------------------------
+
+SUMMARY
+
+ProtectedRoute
+Protects authenticated routes.
+
+Navigate
+Redirects users.
+
+useNavigate()
+Navigates programmatically.
+
+useLocation()
+Reads navigation state.
+
+lazy()
+Loads components on demand.
+
+Suspense
+Displays loading UI while lazy components load.
+
+createBrowserRouter()
+Creates a modern router using route objects.
+
+RouterProvider
+Provides the router to the application.
+
+loader()
+Fetches data before rendering.
+
+action()
+Handles form submissions.
+
+errorElement
+Displays route-specific error UI.
+
+-----------------------------------------
+
+END OF PART 3

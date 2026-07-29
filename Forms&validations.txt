@@ -1,0 +1,867 @@
+# REACT
+
+# DAY 5 – FORMS IN REACT
+
+---
+
+# 1. Controlled Components ⭐⭐⭐
+
+## What are Controlled Components?
+
+A Controlled Component is a form element whose value is controlled by React state.
+
+React manages the input value using state and updates it through `onChange`.
+
+### Flow
+
+```text
+Input Field
+     ↓
+User Types
+     ↓
+onChange Event
+     ↓
+setState()
+     ↓
+State Updated
+     ↓
+Input Value Updated
+```
+
+### Example
+
+```jsx
+import { useState } from "react";
+
+function App() {
+
+  const [name, setName] = useState("");
+
+  return (
+    <>
+      <input
+        type="text"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
+
+      <h2>{name}</h2>
+    </>
+  );
+}
+```
+
+### Characteristics
+
+✔ Value comes from state.
+
+✔ Uses `onChange`.
+
+✔ React controls the input.
+
+✔ Easier validation.
+
+---
+
+# 2. Uncontrolled Components ⭐⭐⭐
+
+## What are Uncontrolled Components?
+
+In Uncontrolled Components, the DOM itself stores the input value.
+
+React does not control the value.
+
+Usually, `useRef()` is used to access input values.
+
+### Example
+
+```jsx
+import { useRef } from "react";
+
+function App() {
+
+  const inputRef = useRef();
+
+  function handleSubmit() {
+    console.log(inputRef.current.value);
+  }
+
+  return (
+    <>
+      <input type="text" ref={inputRef} />
+
+      <button onClick={handleSubmit}>
+        Submit
+      </button>
+    </>
+  );
+}
+```
+
+---
+
+# Controlled vs Uncontrolled Components
+
+| Controlled             | Uncontrolled         |
+| ---------------------- | -------------------- |
+| Managed by React State | Managed by DOM       |
+| Uses useState          | Uses useRef          |
+| Easy validation        | Difficult validation |
+| More predictable       | Less predictable     |
+| Recommended            | Rarely used          |
+| Dynamic UI updates     | No automatic updates |
+
+---
+
+# 3. Dropdown Input Handling ⭐⭐⭐
+
+### Example
+
+```jsx
+import { useState } from "react";
+
+function App() {
+
+  const [city, setCity] = useState("");
+
+  return (
+    <>
+      <select
+        value={city}
+        onChange={(e) => setCity(e.target.value)}
+      >
+        <option value="">Select City</option>
+        <option value="Hyderabad">Hyderabad</option>
+        <option value="Chennai">Chennai</option>
+        <option value="Bangalore">Bangalore</option>
+      </select>
+
+      <h2>{city}</h2>
+    </>
+  );
+}
+```
+
+---
+
+# 4. Checkbox Input Handling ⭐⭐⭐
+
+### Example
+
+```jsx
+const [agree, setAgree] = useState(false);
+
+<input
+type="checkbox"
+checked={agree}
+onChange={(e) => setAgree(e.target.checked)}
+/>
+```
+
+### Output
+
+```
+true
+false
+```
+
+### Important
+
+Checkbox uses:
+
+```jsx
+e.target.checked
+```
+
+not
+
+```jsx
+e.target.value
+```
+
+---
+
+# 5. Radio Button Handling ⭐⭐⭐
+
+```jsx
+const [gender, setGender] = useState("");
+
+<input
+type="radio"
+value="Male"
+checked={gender === "Male"}
+onChange={(e) => setGender(e.target.value)}
+/>
+
+<input
+type="radio"
+value="Female"
+checked={gender === "Female"}
+onChange={(e) => setGender(e.target.value)}
+/>
+```
+
+### Output
+
+```
+Male
+```
+
+or
+
+```
+Female
+```
+
+---
+
+# 6. Validation Basics ⭐⭐⭐⭐⭐
+
+Validation means checking whether user input is correct before submitting.
+
+Examples:
+
+* Empty field
+* Invalid email
+* Short password
+* Invalid mobile number
+
+---
+
+## Required Validation
+
+```js
+if (!username) {
+  alert("Username Required");
+}
+```
+
+---
+
+## Email Validation
+
+```js
+if (!email.includes("@")) {
+  alert("Invalid Email");
+}
+```
+
+---
+
+## Password Validation
+
+```js
+if (password.length < 6) {
+  alert("Minimum 6 characters");
+}
+```
+
+---
+
+## Mobile Validation
+
+```js
+if (number.length !== 10) {
+  alert("Invalid Number");
+}
+```
+
+---
+
+# 7. Regex Validation ⭐⭐⭐⭐⭐
+
+Regex (Regular Expression) is used to validate patterns.
+
+---
+
+## Name Regex
+
+Allows only alphabets.
+
+```js
+const nameRegex = /^[A-Za-z ]+$/;
+```
+
+Examples:
+
+✔ Vishal
+
+✔ John Doe
+
+❌ Vishal123
+
+---
+
+## Email Regex
+
+```js
+const emailRegex =
+/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+```
+
+Examples:
+
+✔ [abc@gmail.com](mailto:abc@gmail.com)
+
+✔ [hello@yahoo.com](mailto:hello@yahoo.com)
+
+❌ gmail.com
+
+❌ abc@com
+
+---
+
+## Password Regex
+
+Password must contain:
+
+* One uppercase letter
+* One lowercase letter
+* One number
+* One special character
+* Minimum 8 characters
+
+```js
+const passwordRegex =
+/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
+```
+
+Examples:
+
+✔ Abc@1234
+
+✔ Hello@2025
+
+❌ abc123
+
+❌ ABC@123
+
+---
+
+## Mobile Regex
+
+```js
+const mobileRegex =
+/^[6-9]\d{9}$/;
+```
+
+Examples:
+
+✔ 9876543210
+
+✔ 7894561230
+
+❌ 1234567890
+
+❌ 98765
+
+---
+
+# 8. Error Handling ⭐⭐⭐⭐⭐
+
+Instead of using alerts, React applications store errors in state.
+
+```jsx
+const [errors, setErrors] = useState({});
+```
+
+Example:
+
+```js
+{
+ username:"Username Required",
+ email:"Invalid Email",
+ password:"Weak Password"
+}
+```
+
+---
+
+# 9. Displaying Errors Below Input Fields ⭐⭐⭐⭐⭐
+
+```jsx
+<input
+name="username"
+value={formData.username}
+onChange={handleInput}
+/>
+
+{
+errors.username &&
+<p style={{color:"red"}}>
+{errors.username}
+</p>
+}
+```
+
+Similarly,
+
+```jsx
+{
+errors.email &&
+<p>{errors.email}</p>
+}
+
+{
+errors.password &&
+<p>{errors.password}</p>
+}
+
+{
+errors.number &&
+<p>{errors.number}</p>
+}
+```
+
+---
+
+# 10. Complete Registration Form Project ⭐⭐⭐⭐⭐
+
+Fields:
+
+✔ Username
+✔ Email
+✔ Password
+✔ Mobile Number
+✔ Gender (Radio)
+✔ City (Dropdown)
+
+---
+
+## Validations
+
+### Username
+* Required
+* Only alphabets
+
+### Email
+* Required
+* Valid email format
+
+### Password
+* Required
+* Uppercase
+* Lowercase
+* Number
+* Special Character
+* Minimum 8 characters
+
+### Mobile
+* Valid Indian mobile number
+
+### Gender
+* Required
+
+### City
+* Required
+
+---
+
+## Error Messages
+
+Displayed below every field.
+
+Example:
+
+```jsx
+{
+errors.username &&
+<p style={{color:"red"}}>
+{errors.username}
+</p>
+}
+```
+---
+----------------------------------
+# COMPLETE FORM
+
+import React, { useState } from "react";
+
+function App() {
+
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+    number: "",
+    gender: "",
+    city: "",
+    agree: false
+  });
+
+  const [errors, setErrors] = useState({});
+
+  // Handle Inputs
+  function handleChange(e) {
+
+    const { name, value, type, checked } = e.target;
+
+    setFormData({
+      ...formData,
+      [name]: type === "checkbox" ? checked : value
+    });
+
+  }
+
+  // Validation Function
+  function validate() {
+
+    let tempErrors = {};
+
+    // Regex
+    const nameRegex = /^[A-Za-z ]+$/;
+
+    const emailRegex =
+      /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
+
+    const mobileRegex =
+      /^[6-9]\d{9}$/;
+
+    // Username
+    if (!formData.username) {
+
+      tempErrors.username = "Username is required";
+
+    }
+    else if (!nameRegex.test(formData.username)) {
+
+      tempErrors.username =
+        "Only alphabets are allowed";
+
+    }
+
+    // Email
+    if (!formData.email) {
+
+      tempErrors.email = "Email is required";
+
+    }
+    else if (!emailRegex.test(formData.email)) {
+
+      tempErrors.email = "Invalid Email";
+
+    }
+
+    // Password
+    if (!formData.password) {
+
+      tempErrors.password = "Password is required";
+
+    }
+    else if (!passwordRegex.test(formData.password)) {
+
+      tempErrors.password =
+        "Password must contain uppercase, lowercase, number and special character";
+
+    }
+
+    // Mobile Number
+    if (!formData.number) {
+
+      tempErrors.number = "Mobile Number is required";
+
+    }
+    else if (!mobileRegex.test(formData.number)) {
+
+      tempErrors.number = "Invalid Mobile Number";
+
+    }
+
+    // Gender
+    if (!formData.gender) {
+
+      tempErrors.gender = "Please select gender";
+
+    }
+
+    // City
+    if (!formData.city) {
+
+      tempErrors.city = "Please select city";
+
+    }
+
+    // Terms and Conditions
+    if (!formData.agree) {
+
+      tempErrors.agree =
+        "Please accept Terms and Conditions";
+
+    }
+
+    setErrors(tempErrors);
+
+    return Object.keys(tempErrors).length === 0;
+
+  }
+
+  // Submit Form
+  function handleSubmit(e) {
+
+    e.preventDefault();
+
+    if (validate()) {
+
+      console.log(formData);
+
+      alert("Form Submitted Successfully");
+
+      setFormData({
+        username: "",
+        email: "",
+        password: "",
+        number: "",
+        gender: "",
+        city: "",
+        agree: false
+      });
+
+      setErrors({});
+
+    }
+
+  }
+
+  return (
+    <div>
+
+      <h1>Registration Form</h1>
+
+      <form onSubmit={handleSubmit}>
+
+        {/* Username */}
+        <input
+          type="text"
+          name="username"
+          placeholder="Enter Username"
+          value={formData.username}
+          onChange={handleChange}
+        />
+
+        {
+          errors.username &&
+          <p style={{ color: "red" }}>
+            {errors.username}
+          </p>
+        }
+
+        <br /><br />
+
+        {/* Email */}
+        <input
+          type="email"
+          name="email"
+          placeholder="Enter Email"
+          value={formData.email}
+          onChange={handleChange}
+        />
+
+        {
+          errors.email &&
+          <p style={{ color: "red" }}>
+            {errors.email}
+          </p>
+        }
+
+        <br /><br />
+
+        {/* Password */}
+        <input
+          type="password"
+          name="password"
+          placeholder="Enter Password"
+          value={formData.password}
+          onChange={handleChange}
+        />
+
+        {
+          errors.password &&
+          <p style={{ color: "red" }}>
+            {errors.password}
+          </p>
+        }
+
+        <br /><br />
+
+        {/* Mobile */}
+        <input
+          type="text"
+          name="number"
+          placeholder="Enter Mobile Number"
+          value={formData.number}
+          onChange={handleChange}
+        />
+
+        {
+          errors.number &&
+          <p style={{ color: "red" }}>
+            {errors.number}
+          </p>
+        }
+
+        <br /><br />
+
+        {/* Gender */}
+        <h3>Gender</h3>
+
+        Male
+
+        <input
+          type="radio"
+          name="gender"
+          value="Male"
+          checked={formData.gender === "Male"}
+          onChange={handleChange}
+        />
+
+        Female
+
+        <input
+          type="radio"
+          name="gender"
+          value="Female"
+          checked={formData.gender === "Female"}
+          onChange={handleChange}
+        />
+
+        <br />
+
+        {
+          errors.gender &&
+          <p style={{ color: "red" }}>
+            {errors.gender}
+          </p>
+        }
+
+        <br />
+
+        {/* City Dropdown */}
+        <select
+          name="city"
+          value={formData.city}
+          onChange={handleChange}
+        >
+
+          <option value="">
+            Select City
+          </option>
+
+          <option value="Hyderabad">
+            Hyderabad
+          </option>
+
+          <option value="Chennai">
+            Chennai
+          </option>
+
+          <option value="Bangalore">
+            Bangalore
+          </option>
+
+        </select>
+
+        {
+          errors.city &&
+          <p style={{ color: "red" }}>
+            {errors.city}
+          </p>
+        }
+
+        <br /><br />
+
+        {/* Terms */}
+        <input
+          type="checkbox"
+          name="agree"
+          checked={formData.agree}
+          onChange={handleChange}
+        />
+
+        I Accept Terms and Conditions
+
+        {
+          errors.agree &&
+          <p style={{ color: "red" }}>
+            {errors.agree}
+          </p>
+        }
+
+        <br /><br />
+
+        <button type="submit">
+          Submit
+        </button>
+
+      </form>
+
+    </div>
+  );
+
+}
+
+export default App;
+
+--------------------------------------------
+
+## Concepts Covered
+
+✔ Controlled Components
+
+✔ Uncontrolled Components
+
+✔ Dropdown Input
+
+✔ Checkbox Input
+
+✔ Radio Button
+
+✔ Form Submission
+
+✔ Validation
+
+✔ Regex
+
+✔ Error Handling
+
+✔ Displaying Errors
+
+✔ Dynamic Form Handling
+
+✔ Reset Form
+
+---
+
+# Interview Questions
+
+1. What are Controlled Components?
+
+2. What are Uncontrolled Components?
+
+3. Difference between Controlled and Uncontrolled Components?
+
+4. Why use useRef in forms?
+
+5. What is validation?
+
+6. What is regex?
+
+7. Explain email regex.
+
+8. Difference between value and checked?
+
+9. How do you display errors below fields?
+
+10. Why use an errors object?
+
+11. What is e.target.checked?
+
+12. Why use preventDefault()?
+
+13. What is dynamic form handling?
+
+14. Explain `[e.target.name]`.
+
+15. How do you validate password strength?

@@ -1,0 +1,625 @@
+==================================================
+LIFECYCLE METHODS IN REACT
+==================================================
+
+What are Lifecycle Methods?
+
+In React, lifecycle methods are special methods in class components
+that let you run code at specific points in a component's life:
+when it is created, updated, or removed from the UI.
+
+A React component generally goes through three phases:
+
+1. Mounting   -> Component is created and inserted into the DOM.
+2. Updating   -> Component re-renders due to state or prop changes.
+3. Unmounting -> Component is removed from the DOM.
+
+
+==================================================
+LIFECYCLE FLOW
+==================================================
+
+Mounting
+ ├─ constructor()
+ ├─ render()
+ └─ componentDidMount()
+
+Updating
+ ├─ shouldComponentUpdate()
+ ├─ render()
+ └─ componentDidUpdate()
+
+Unmounting
+ └─ componentWillUnmount()
+
+
+==================================================
+MOUNTING PHASE
+==================================================
+
+constructor()
+- Runs first when the component is created and is used to
+  initialize state and bind methods.
+
+render()
+- Returns the JSX that React displays in the UI.
+
+componentDidMount()
+- Runs once after the component is first rendered and is
+  commonly used for API calls or setup tasks.
+
+
+==================================================
+UPDATING PHASE
+==================================================
+
+shouldComponentUpdate()
+- Determines whether the component should re-render after
+  props or state changes.
+
+render()
+- Re-runs to generate the updated UI whenever the component updates.
+
+componentDidUpdate()
+- Runs after a component has been updated and is useful for
+  reacting to prop or state changes.
+
+
+==================================================
+UNMOUNTING PHASE
+==================================================
+
+componentWillUnmount()
+- Runs just before the component is removed and is used to
+  clean up timers, listeners, or subscriptions.
+
+
+==================================================
+NOTE
+==================================================
+
+Lifecycle methods are available only in class components.
+
+In modern React, functional components with Hooks
+(especially useEffect) are used to achieve similar behavior.
+
+
+==================================================
+CLASS METHODS VS HOOK EQUIVALENTS
+==================================================
+
++------------------------+--------------------------------------+
+| Class Lifecycle Method | Hook Equivalent                      |
++------------------------+--------------------------------------+
+| componentDidMount()    | useEffect(() => {}, [])              |
+|                        |                                      |
+| componentDidUpdate()   | useEffect(() => {}, [dependency])    |
+|                        |                                      |
+| componentWillUnmount() | Cleanup function inside useEffect    |
++------------------------+--------------------------------------+
+
+
+
+==================================================
+USEEFFECT HOOK IN REACT
+==================================================
+
+What is useEffect?
+
+useEffect is a React Hook that allows you to perform side effects in functional components.
+A side effect is any operation that affects something outside the component itself.
+
+Side effects include:
+- API calls
+- Timers (setTimeout, setInterval)
+- Event listeners
+- DOM manipulation
+- Subscriptions
+
+Syntax:
+
+useEffect(() => {
+    // Side effect code
+
+    return () => {
+        // Cleanup code (optional)
+    };
+}, dependencyArray);
+
+
+==================================================
+WHY USE useEffect?
+==================================================
+
+Before Hooks, side effects were handled using lifecycle methods
+such as:
+
+- componentDidMount()
+- componentDidUpdate()
+- componentWillUnmount()
+
+In modern React, useEffect combines the functionality of these
+lifecycle methods into a single Hook.
+
+
+==================================================
+USEEFFECT EXECUTION FLOW
+==================================================
+
+Component Render
+       |
+       v
+useEffect Executes
+       |
+       v
+State/Props Change?
+       |
+      Yes
+       |
+       v
+Cleanup Runs (if present)
+       |
+       v
+useEffect Executes Again
+       |
+       v
+Component Unmounts
+       |
+       v
+Cleanup Runs
+
+
+==================================================
+USEEFFECT WITHOUT DEPENDENCY ARRAY
+==================================================
+
+useEffect(() => {
+    console.log("Runs after every render");
+});
+
+Behavior:
+- Runs after initial render.
+- Runs after every re-render.
+
+Use Case:
+- Rarely used because it executes on every render.
+
+
+==================================================
+USEEFFECT WITH EMPTY DEPENDENCY ARRAY
+==================================================
+
+useEffect(() => {
+    console.log("Runs only once");
+}, []);
+
+Behavior:
+- Runs only after the initial render.
+- Similar to componentDidMount().
+
+Use Case:
+- API calls
+- Initial setup
+- Fetching data
+
+
+==================================================
+USEEFFECT WITH DEPENDENCIES
+==================================================
+
+useEffect(() => {
+    console.log("Runs when count changes");
+}, [count]);
+
+Behavior:
+- Runs after initial render.
+- Runs whenever the specified dependency changes.
+
+Use Case:
+- Reacting to state or prop changes.
+
+
+==================================================
+USEEFFECT CLEANUP FUNCTION
+==================================================
+
+useEffect(() => {
+
+    const timer = setInterval(() => {
+        console.log("Running...");
+    }, 1000);
+
+    return () => {
+        clearInterval(timer);
+    };
+
+}, []);
+
+Behavior:
+- Cleanup runs before the next effect execution.
+- Cleanup runs when the component unmounts.
+
+Use Case:
+- Clear timers
+- Remove event listeners
+- Unsubscribe from services
+
+
+==================================================
+DEPENDENCY ARRAY RULES
+==================================================
+
+[]            -> Run once after initial render.
+
+[count]       -> Run when count changes.
+
+[count, name] -> Run when count or name changes.
+
+No array      -> Run after every render.
+
+
+==================================================
+CLASS LIFECYCLE VS useEffect
+==================================================
+
++------------------------+--------------------------------------+
+| Class Lifecycle Method | useEffect Equivalent                 |
++------------------------+--------------------------------------+
+| componentDidMount()    | useEffect(() => {}, [])              |
+|                        |                                      |
+| componentDidUpdate()   | useEffect(() => {}, [dependency])    |
+|                        |                                      |
+| componentWillUnmount() | Cleanup function in useEffect        |
++------------------------+--------------------------------------+
+
+
+==================================================
+COMMON INTERVIEW QUESTIONS
+==================================================
+
+Q: What is useEffect?
+A: A Hook used to perform side effects in functional components.
+
+Q: What is the purpose of the dependency array?
+A: It controls when the effect should re-run.
+
+Q: What happens if no dependency array is provided?
+A: The effect runs after every render.
+
+Q: What does an empty dependency array do?
+A: Runs the effect only once after the initial render.
+
+Q: Why is a cleanup function needed?
+A: To prevent memory leaks by cleaning up resources such as
+   timers, event listeners, and subscriptions.
+
+==================================================
+INTERVIEW SUMMARY of Lifecycle methods
+==================================================
+
+Lifecycle methods are special methods in React class
+components that execute during different phases of a
+component's lifecycle—Mounting, Updating, and Unmounting—
+allowing developers to perform actions such as data fetching,
+updating the UI, and cleaning up resources.
+
+==================================================
+INTERVIEW SUMMARY of UseEffect
+==================================================
+
+useEffect is a React Hook used to handle side effects in
+functional components. It can run after every render, run once
+on mount, or run whenever specific dependencies change. It also
+supports cleanup logic, making it the modern replacement for
+componentDidMount(), componentDidUpdate(), and
+componentWillUnmount().
+
+
+==================================================
+EXAMPLE 1: RUN AFTER EVERY RENDER
+==================================================
+
+useEffect(() => {
+    console.log("Component Rendered");
+});
+
+Real-Time Example:
+
+Imagine a CCTV camera that records every activity inside
+a classroom.
+
+Every time something changes,
+the camera records again.
+
+Behavior:
+✔ Initial Render
+✔ Every Re-render
+
+==================================================
+EXAMPLE 2: RUN ONLY ONCE
+==================================================
+
+useEffect(() => {
+    console.log("Fetching User Data...");
+}, []);
+
+Real-Time Example:
+
+A student enters the classroom.
+
+Attendance is marked only once.
+
+Even if the student changes seats,
+attendance is not marked again.
+
+Behavior:
+✔ Runs once after first render
+
+Common Use Cases:
+✔ API Calls
+✔ Initial Setup
+✔ Loading Data
+
+
+==================================================
+EXAMPLE 3: RUN WHEN SPECIFIC DATA CHANGES
+==================================================
+
+const [count, setCount] = useState(0);
+
+useEffect(() => {
+    console.log("Count Changed");
+}, [count]);
+
+Real-Time Example:
+
+A classroom monitor updates the total number of students.
+
+Whenever student count changes,
+the monitor updates.
+
+If count doesn't change,
+nothing happens.
+
+Behavior:
+✔ Runs initially
+✔ Runs whenever count changes
+
+Use Cases:
+✔ Search Filters
+✔ Price Calculations
+✔ Dynamic Data Updates
+
+==================================================
+EXAMPLE 4: MULTIPLE DEPENDENCIES
+==================================================
+
+useEffect(() => {
+    console.log("Count or Name Changed");
+}, [count, name]);
+
+Real-Time Example:
+
+A report card should be updated when:
+
+- Marks change
+OR
+- Student name changes
+
+If either changes,
+the report card is regenerated.
+
+Behavior:
+✔ Runs when count changes
+✔ Runs when name changes
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import { useEffect, useState } from "react";
+
+// function Effect() {
+//     const [theme, setTheme] = useState("Light");
+//     const [username, setUsername] = useState("John");
+//     const [age, setAge] = useState(20);
+
+//     // [] -> Runs once after the initial render
+//     useEffect(() => {
+//         console.log("Component mounted");
+//     }, []);
+
+//     // [theme] -> Runs whenever theme changes
+//     useEffect(() => {
+//         console.log("Theme changed:", theme);
+//     }, [theme]);
+
+//     // [username, age] -> Runs whenever username or age changes
+//     useEffect(() => {
+//         console.log("Username or Age changed");
+//     }, [username, age]);
+
+//     // No dependency array -> Runs after every render
+//     useEffect(() => {
+//         console.log("Component rendered");
+//     });
+
+//     return (
+//         <div>
+//             <h2>useEffect Examples</h2>
+
+//             <p>Theme: {theme}</p>
+//             <button
+//                 onClick={() =>
+//                     setTheme(theme === "Light" ? "Dark" : "Light")
+//                 }
+//             >
+//                 Change Theme
+//             </button>
+
+//             <hr />
+
+//             <p>Username: {username}</p>
+//             <button onClick={() => setUsername("Alice")}>
+//                 Change Username
+//             </button>
+
+//             <hr />
+
+//             <p>Age: {age}</p>
+//             <button onClick={() => setAge(age + 1)}>
+//                 Increase Age
+//             </button>
+//         </div>
+//     );
+// }
+
+// export default Effect;
+
+
+
+
+
+// import { useEffect, useState } from "react";
+
+// function Effect() {
+//   const [products, setProducts] = useState([]);
+
+//   useEffect(() => {
+//     fetch("https://fakestoreapi.com/products")
+//       .then((response) => response.json())
+//       .then((data) => setProducts(data));
+//   }, []);
+
+//   return (
+//     <div>
+//       <h2>Products</h2>
+
+//       {products.map((product) => (
+//         <div key={product.id}>
+//           <h4>{product.title}</h4>
+//           <p>${product.price}</p>
+//         </div>
+//       ))}
+//     </div>
+//   );
+// }
+
+// export default Effect;
+
+
+
+
+
+// import { useEffect, useState } from "react";
+// import axios from "axios";
+
+// function Effect() {
+//   const [category, setCategory] = useState("electronics");
+//   const [products, setProducts] = useState([]);
+
+//   useEffect(() => {
+//     axios
+//       .get(`https://fakestoreapi.com/products/category/${category}`)
+//       .then((response) => {
+//         setProducts(response.data);
+//       })
+//       .catch((error) => {
+//         console.log(error);
+//       });
+//   }, [category]); // Runs whenever category changes
+
+//   return (
+//     <div>
+//       <h2>Filter Products by Category</h2>
+
+//       <select
+//         value={category}
+//         onChange={(e) => setCategory(e.target.value)}
+//       >
+//         <option value="electronics">Electronics</option>
+//         <option value="jewelery">Jewelery</option>
+//         <option value="men's clothing">Men's Clothing</option>
+//         <option value="women's clothing">Women's Clothing</option>
+//       </select>
+
+//       <hr />
+
+//       {products.map((product) => (
+//         <div key={product.id}>
+//           <h3>{product.title}</h3>
+//           <p>${product.price}</p>
+//         </div>
+//       ))}
+//     </div>
+//   );
+// }
+
+// export default Effect;
+
+
+
+
+
+// import { useEffect, useState } from "react";
+// import axios from "axios";
+
+// function Effect() {
+//   const [category, setCategory] = useState("all");
+//   const [products, setProducts] = useState([]);
+
+//   useEffect(() => {
+//     const url =
+//       category === "all"
+//         ? "https://fakestoreapi.com/products"
+//         : `https://fakestoreapi.com/products/category/${category}`;
+
+//     axios
+//       .get(url)
+//       .then((response) => {
+//         setProducts(response.data);
+//       })
+//       .catch((error) => {
+//         console.log(error);
+//       });
+//   }, [category]);
+
+//   return (
+//     <div>
+//       <h2>Products</h2>
+
+//       <select
+//         value={category}
+//         onChange={(e) => setCategory(e.target.value)}
+//       >
+//         <option value="all">All</option>
+//         <option value="electronics">Electronics</option>
+//         <option value="jewelery">Jewelery</option>
+//         <option value="men's clothing">Men's Clothing</option>
+//         <option value="women's clothing">Women's Clothing</option>
+//       </select>
+
+//       <hr />
+
+//       {products.map((product) => (
+//         <div key={product.id}>
+//           <h3>{product.title}</h3>
+//           <p>${product.price}</p>
+//         </div>
+//       ))}
+//     </div>
+//   );
+// }
+
+// export default Effect;

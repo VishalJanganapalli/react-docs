@@ -1,0 +1,7 @@
+
+Props : passing data from one component to another component
+prop-drilling : passing data through multple nested cmponent until in reaches to required child component
+
+Reusable Component - To reuse code in multiple places without any duplicates (designs)
+Api Sharing Component - To pass functions to any component by creating it in here and xalling it where ever it needs. (Functions and apis)
+Context Component - To share data to the multiple components without passing any props (DATA and ApiData)

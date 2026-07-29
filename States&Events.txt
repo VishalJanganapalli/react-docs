@@ -1,0 +1,785 @@
+# REACT – DAY 4: STATE & EVENTS
+
+---
+
+# 1. WHAT IS STATE
+State is a built-in object in React that stores data which can change over time inside a component.
+It controls what is shown on the UI and how the component behaves.
+Examples: counter, input fields, toggle values
+
+----------------------------------------
+
+WHY DO WE NEED STATE
+We need state to make applications dynamic and interactive.
+It allows:
+- UI updates when data changes
+- Handling user input
+- Real-time changes without page reload
+
+----------------------------------------
+
+WHAT IS useState
+useState is a React Hook used to create and manage state in functional components.
+It gives functional components memory to store and update values.
+
+----------------------------------------
+
+useState SYNTAX
+const [state, setState] = useState(initialValue);
+
+state = current value
+setState = function to update value
+initialValue = starting value
+
+Example:
+const [count, setCount] = useState(0);
+
+
+
+### Real-Life Example
+
+Think of a light switch:
+* OFF → Light is OFF
+* ON → Light is ON
+The ON/OFF value is the **state**.
+
+```jsx
+const [isOn, setIsOn] = useState(false);
+```
+
+* `isOn` → Current state value
+* `setIsOn()` → Updates the state
+
+### Common Examples of State
+
+* Likes count
+* Dark mode
+* Shopping cart
+* Search input
+* Form fields
+
+---
+
+---
+
+# 2. Why Do We Need State?
+
+### Without State
+
+```jsx
+let count = 0;
+
+function increment() {
+  count++;
+}
+```
+
+Although `count` changes, React does **not** update the UI.
+
+### Using State
+
+```jsx
+const [count, setCount] = useState(0);
+
+function increment() {
+  setCount(count + 1);
+}
+```
+
+Whenever state changes:
+
+1. State value changes
+2. React re-renders
+3. UI gets updated
+
+---
+
+---
+
+# 3. useState Hook
+
+`useState` is a React Hook used to create and manage state.
+
+### Syntax
+
+```jsx
+const [state, setState] = useState(initialValue);
+```
+
+### Example
+
+```jsx
+const [count, setCount] = useState(0);
+```
+
+* `count` → Current value
+* `setCount()` → Setter function
+* `0` → Initial value
+
+---
+
+---
+
+# 4. Counter Example
+
+```jsx
+import { useState } from "react";
+
+function App() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <>
+      <h1>{count}</h1>
+
+      <button onClick={() => setCount(count + 1)}>
+        Increment
+      </button>
+    </>
+  );
+}
+```
+
+### Explanation
+
+* Button click triggers `onClick`
+* `setCount()` updates state
+* React re-renders
+* New value appears on screen
+
+---
+-------------------------------------------------------
+# Show Hide Password Example
+const [showPassword, setShowPassword] = useState(false);
+
+<input
+  type={showPassword ? "text" : "password"}
+/>
+
+<button onClick={() => setShowPassword(!showPassword)}>
+  {showPassword ? "Hide" : "Show"}
+</button>
+-------------------------------------------------------
+
+---
+
+# 5. Event Handling
+
+Events are user actions.
+
+### Examples
+
+* Click
+* Typing
+* Submit
+* Hover
+
+### HTML vs React
+
+| HTML     | React    |
+| -------- | -------- |
+| onclick  | onClick  |
+| onchange | onChange |
+| onsubmit | onSubmit |
+
+### Example
+
+```jsx
+function showMessage() {
+  alert("Hello");
+}
+
+<button onClick={showMessage}>Click</button>;
+```
+
+---
+
+---
+
+# 6. Event Object
+
+React automatically passes an event object.
+
+### Example
+
+```jsx
+<input
+  onChange={(e) => setName(e.target.value)}
+/>
+```
+
+### Explanation
+
+* `e` → Event object
+* `e.target` → Current element
+* `e.target.value` → Input value
+
+---
+
+---
+
+# 7. Input Handling
+
+```jsx
+function App() {
+  const [name, setName] = useState("");
+
+  return (
+    <>
+      <input
+        type="text"
+        onChange={(e) => setName(e.target.value)}
+      />
+
+      <h2>Hello {name}</h2>
+    </>
+  );
+}
+```
+
+### What You Learn
+
+* `onChange`
+* Dynamic UI
+* State updates
+
+---
+
+---
+
+# 8. Conditional Rendering
+
+Conditional Rendering means showing different UI based on conditions.
+
+## A. Using if...else
+
+```jsx
+if (isLoggedIn) {
+  return <Home />;
+} else {
+  return <Login />;
+}
+```
+
+## B. Using Ternary Operator
+
+```jsx
+{
+  isLoggedIn ? <Home /> : <Login />;
+}
+```
+
+## C. Using && Operator
+
+```jsx
+{
+  show && <h2>Welcome React</h2>;
+}
+```
+
+---
+
+---
+
+# 9. Toggle Example
+
+```jsx
+function App() {
+  const [show, setShow] = useState(false);
+
+  return (
+    <>
+      <button onClick={() => setShow(!show)}>
+        Toggle
+      </button>
+
+      {show && <h2>Welcome React</h2>}
+    </>
+  );
+}
+```
+
+### Explanation
+
+* Initially `show = false`
+* Text is hidden
+* Click button
+* `show` becomes `true`
+* Text appears
+
+---
+
+---
+
+# 10. Multiple States
+
+```jsx
+const [name, setName] = useState("");
+const [age, setAge] = useState("");
+```
+
+A component can have multiple state variables.
+
+---
+
+---
+
+# 11. Object State
+
+```jsx
+const [user, setUser] = useState({
+  name: "",
+  city: ""
+});
+```
+
+### Updating Object State
+
+```jsx
+setUser({
+  ...user,
+  name: "John"
+});
+```
+
+### Why Spread Operator?
+
+The spread operator preserves existing values while updating specific properties.
+
+---
+
+---
+
+# 12. Array State
+
+```jsx
+const [tasks, setTasks] = useState([]);
+```
+
+### Adding a New Task
+
+```jsx
+setTasks([...tasks, task]);
+```
+
+### Common Uses
+
+* Todo App
+* Shopping Cart
+* Dynamic Lists
+
+---
+
+---
+
+# 13. List Rendering
+
+```jsx
+{
+  tasks.map((item, index) => (
+    <li key={index}>{item}</li>
+  ));
+}
+```
+
+### Why Use key?
+
+The `key` helps React identify elements efficiently during updates.
+
+---
+
+---
+
+# 14. Todo Application Concepts
+
+A Todo App combines:
+
+* State
+* Events
+* Arrays
+* `map()`
+* Keys
+* Dynamic Rendering
+
+---
+
+---
+
+# 15. Props vs State
+
+| Props                 | State                    |
+| --------------------- | ------------------------ |
+| Read-only             | Mutable                  |
+| External data         | Internal data            |
+| Passed Parent → Child | Managed inside component |
+
+---
+
+---
+
+# 16. Common Mistakes
+
+### Wrong
+
+```jsx
+count++;
+```
+
+### Correct
+
+```jsx
+setCount(count + 1);
+```
+
+---
+
+### Wrong
+
+```jsx
+user.name = "John";
+```
+
+### Correct
+
+```jsx
+setUser({
+  ...user,
+  name: "John"
+});
+```
+
+---
+
+---
+
+OBJECT AND ARRAY useState (REACT NOTES)
+
+========================================
+1. OBJECT useState
+========================================
+
+WHAT IT IS:
+Object useState is used to store multiple related values in a single state variable.
+It is useful for forms, user data, settings, etc.
+
+----------------------------------------
+
+EXAMPLE 1: BASIC OBJECT STATE
+
+const [user, setUser] = useState({
+  name: "",
+  age: "",
+  email: ""
+});
+
+Updating a single field:
+
+setUser({
+  ...user,
+  name: "John"
+});
+
+----------------------------------------
+
+EXAMPLE 2: FORM HANDLING (MOST COMMON)
+
+const [form, setForm] = useState({
+  username: "",
+  password: ""
+});
+
+function handleChange(e) {
+  const { name, value } = e.target;
+
+  setForm({
+    ...form,
+    [name]: value
+  });
+}
+
+<input name="username" onChange={handleChange} />
+<input name="password" onChange={handleChange} />
+
+----------------------------------------
+
+KEY POINTS (OBJECT STATE):
+- Used for related data
+- Always use spread operator (...)
+- Never mutate state directly
+- Use [e.target.name] for dynamic updates
+
+
+========================================
+2. ARRAY useState
+========================================
+
+WHAT IT IS:
+Array useState is used to store multiple items (lists).
+Examples: todos, users, products, messages
+
+----------------------------------------
+
+EXAMPLE 1: BASIC ARRAY STATE
+
+const [items, setItems] = useState([]);
+
+Adding item:
+
+setItems([...items, "Apple"]);
+
+----------------------------------------
+
+EXAMPLE 2: TODO LIST
+
+const [todos, setTodos] = useState([]);
+const [task, setTask] = useState("");
+
+function addTodo() {
+  setTodos([...todos, task]);
+  setTask("");
+}
+
+----------------------------------------
+
+EXAMPLE 3: ARRAY OF OBJECTS
+
+const [users, setUsers] = useState([
+  { id: 1, name: "John" },
+  { id: 2, name: "Jane" }
+]);
+
+Adding new user:
+
+setUsers([
+  ...users,
+  { id: 3, name: "Mike" }
+]);
+
+-------------------------------------
+import { useState } from "react";
+
+function App() {
+  const [users, setUsers] = useState([]);
+
+  const [form, setForm] = useState({
+    name: "",
+    age: "",
+    city: ""
+  });
+
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const addUser = () => {
+    setUsers([...users, { id: users.length + 1, ...form }]);
+    setForm({ name: "", age: "", city: "" });
+  };
+
+  return (
+    <div>
+      <h2>Users</h2>
+
+      {users.map((u) => (
+        <p key={u.id}>
+          {u.id}. {u.name} - {u.age} - {u.city}
+        </p>
+      ))}
+
+      <input name="name" value={form.name} onChange={handleChange} placeholder="Name" />
+      <input name="age" value={form.age} onChange={handleChange} placeholder="Age" />
+      <input name="city" value={form.city} onChange={handleChange} placeholder="City" />
+
+      <button onClick={addUser}>Add</button>
+    </div>
+  );
+}
+
+export default App;
+----------------------------------------
+
+EXAMPLE 4: REMOVE ITEM
+
+function removeItem(index) {
+  setItems(items.filter((_, i) => i !== index));
+}
+
+----------------------------------------
+
+EXAMPLE 5: UPDATE ITEM
+
+function updateItem(index) {
+  const updated = [...items];
+  updated[index] = "Updated Value";
+  setItems(updated);
+}
+
+----------------------------------------
+
+KEY POINTS (ARRAY STATE):
+- Used for lists of data
+- Use spread operator (...) to add items
+- Use filter() to remove items
+- Use map() or copy method to update items
+- Never mutate original array
+
+
+========================================
+INTERVIEW SUMMARY
+========================================
+
+- Object state → used for grouped data (forms, user info)
+- Array state → used for lists (todos, products, users)
+- Always keep state immutable
+- Use spread operator for updates
+- Use proper handlers for clean code
+
+---
+
+# 17. Interview Questions
+
+STATE & REACT BASICS (INTERVIEW NOTES)
+
+1. WHAT IS STATE
+State is a built-in object in React that stores data which can change over time inside a component.
+It controls what is shown on the UI and how the component behaves.
+Examples: counter, input fields, toggle values
+
+----------------------------------------
+
+2. WHY DO WE NEED STATE
+We need state to make applications dynamic and interactive.
+It allows:
+- UI updates when data changes
+- Handling user input
+- Real-time changes without page reload
+
+----------------------------------------
+
+3. WHAT IS useState
+useState is a React Hook used to create and manage state in functional components.
+It gives functional components memory to store and update values.
+
+----------------------------------------
+
+4. useState SYNTAX
+const [state, setState] = useState(initialValue);
+
+state = current value
+setState = function to update value
+initialValue = starting value
+
+Example:
+const [count, setCount] = useState(0);
+
+----------------------------------------
+
+5. WHAT CAUSES RE-RENDERING IN REACT
+A component re-renders when:
+- State changes
+- Props change
+- Parent component re-renders
+- Context value changes
+
+----------------------------------------
+
+6. DIFFERENCE BETWEEN PROPS AND STATE
+
+PROPS:
+- Passed from parent to child
+- Read-only
+- Used for communication between components
+
+STATE:
+- Managed inside component
+- Can be changed
+- Used for internal data handling
+
+----------------------------------------
+
+7. CONDITIONAL RENDERING
+Rendering UI based on conditions.
+
+Example:
+{isLoggedIn ? "Welcome" : "Please Login"}
+
+or
+{show && <Component />}
+
+----------------------------------------
+
+8. EVENT HANDLING
+Event handling means responding to user actions like click, input, submit.
+React uses Synthetic Events.
+
+Example:
+<button onClick={handleClick}>Click</button>
+
+----------------------------------------
+
+9. e.target.value
+e.target.value is used to get the value from an input field.
+It is commonly used in forms.
+
+Example:
+function handleChange(e) {
+  console.log(e.target.value);
+}
+
+----------------------------------------
+
+10. SPREAD OPERATOR (...)
+Used to copy and update objects/arrays without mutating original state.
+React requires immutability for proper re-rendering.
+
+Example:
+setUserData({
+  ...userData,
+  name: "John"
+});
+
+---
+
+---
+
+# Quick Summary
+
+### State
+
+* Stores changing data
+* Triggers re-render
+* Managed using `useState`
+
+### Events
+
+* User interactions
+* `onClick`
+* `onChange`
+* `onSubmit`
+
+### Conditional Rendering
+
+* `if...else`
+* Ternary (`? :`)
+* `&&`
+
+### State Types
+
+* Primitive State
+* Object State
+* Array State
+
+### Important Rule
+
+Never modify state directly.
+
+✅ Use setter functions:
+
+```jsx
+setCount(...)
+setUser(...)
+setTasks(...)
+```

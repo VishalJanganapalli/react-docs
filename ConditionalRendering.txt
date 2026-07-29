@@ -1,0 +1,337 @@
+REACT CONDITIONAL RENDERING
+====================================================
+
+1. WHAT IS CONDITIONAL RENDERING?
+
+Conditional Rendering means displaying different UI based on a condition.
+
+Instead of always showing the same UI, React decides what to display depending on values such as:
+- state
+- props
+- conditions
+
+Real-world Examples:
+- Login / Logout
+- Loading Spinner
+- Error Messages
+- Empty Cart
+- Search Results
+- User Permissions
+
+
+====================================================
+
+2. WHY DO WE NEED CONDITIONAL RENDERING?
+
+Instead of creating two different pages, React displays one UI based on a condition.
+
+Example:
+
+If cart has items:
+- Display items
+- Show "Your Cart"
+- Show item details
+- Show Checkout Button
+
+If cart is empty:
+- Show "Your Cart is Empty"
+- Show "Continue Shopping" button (navigates to products)
+
+
+====================================================
+
+3. USING IF STATEMENT
+
+function App() {
+  const isLoggedIn = true;
+
+  if (isLoggedIn) {
+    return <Dashboard />;
+  }
+
+  return <Login />;
+}
+
+export default App;
+
+
+====================================================
+
+4. USING TERNARY OPERATOR
+
+A simplified version of if-else statements.
+
+Syntax:
+condition ? truePart : falsePart
+
+Examples:
+
+{ isLoggedIn ? <Dashboard /> : <Login /> }
+
+function App() {
+  const isDark = true;
+
+  return (
+    <div>
+      <h2>{isDark ? "Dark Mode" : "Light Mode"}</h2>
+    </div>
+  );
+}
+
+
+====================================================
+
+5. LOGICAL AND (&&)
+
+Used when you only want to display something if a condition is true.
+
+- No else case
+- Syntax: condition && JSX
+
+Example:
+
+const cartItems = 5;
+
+return (
+  <>
+    {cartItems > 0 && <p>Items in Cart: {cartItems}</p>}
+  </>
+);
+
+
+====================================================
+
+6. MULTIPLE CONDITIONS
+
+Used when you want to render multiple things based on a condition.
+
+
+====================================================
+
+7. UI STATES
+
+Common UI states:
+- Loading State
+- Error State
+- Login State
+
+
+
+Example 1: Loading Users
+
+import { useEffect, useState } from "react";
+
+function App() {
+  const [loading, setLoading] = useState(true);
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setUsers([
+        { id: 1, name: "John" },
+        { id: 2, name: "Alice" },
+        { id: 3, name: "Bob" },
+      ]);
+
+      setLoading(false);
+    }, 3000);
+  }, []);
+
+  if (loading) {
+    return <h2>Loading Users...</h2>;
+  }
+
+  return (
+    <div>
+      <h2>User List</h2>
+
+      {users.map((user) => (
+        <p key={user.id}>{user.name}</p>
+      ))}
+    </div>
+  );
+}
+
+export default App;
+
+
+----------------------------------------------------
+
+Alternate Way:
+
+<div style={{ textAlign: "center", marginTop: "50px" }}>
+  {loading ? (
+    <h2>Loading...</h2>
+  ) : (
+    <h2>Data Loaded Successfully!</h2>
+  )}
+</div>
+
+
+====================================================
+
+EXAMPLE: LIVE API FETCH
+
+import { useEffect, useState } from "react";
+
+function App() {
+  const [todos, setTodos] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  async function getTodos() {
+    const data = await axios.get(
+      "https://todo-api-five-eta.vercel.app/api/todos"
+    );
+    setTodos(data);
+    setLoading(false);
+  }
+
+  useEffect(() => {
+    setTimeout(() => {
+      getTodos();
+    }, 3000);
+  }, []);
+
+  return (
+    <div>
+      {loading ? (
+        <h2>Loading...</h2>
+      ) : (
+        <>
+          <h2>Todo List</h2>
+
+          {todos.map((todo) => (
+            <p key={todo._id}>{todo.title}</p>
+          ))}
+        </>
+      )}
+    </div>
+  );
+}
+
+export default App;
+
+
+====================================================
+
+EXAMPLE 2: ERROR STATE (AXIOS API FETCH)
+
+Sometimes an API request may fail because of:
+- No Internet Connection
+- Server Error
+- Invalid API URL
+- Network Timeout
+
+Instead of showing a blank page, we display an error message.
+
+
+import { useEffect, useState } from "react";
+import axios from "axios";
+
+function App() {
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  async function getUsers() {
+    try {
+      const response = await axios.get(
+        "https://jsonplaceholder.typicode.com/users"
+      );
+
+      setUsers(response.data);
+    } catch (err) {
+      setError("Failed to fetch users.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    getUsers();
+  }, []);
+
+
+  if (loading) {
+    return <h2>Loading Users...</h2>;
+  }
+
+
+  if (error) {
+    return (
+      <h2 style={{ color: "red" }}>
+        Error: {error}
+      </h2>
+    );
+  }
+
+
+  return (
+    <div>
+      <h2>User List</h2>
+
+      {users.map((user) => (
+        <p key={user.id}>
+          {user.name}
+        </p>
+      ))}
+    </div>
+  );
+}
+
+export default App;
+
+
+----------------------------------------------------
+
+Alternate Way:
+
+<div>
+  {loading ? (
+    <h2>Loading...</h2>
+  ) : error ? (
+    <h2 style={{ color: "red" }}>
+      Error: {error}
+    </h2>
+  ) : (
+    <>
+      <h2>User List</h2>
+
+      {users.map((user) => (
+        <p key={user.id}>
+          {user.name}
+        </p>
+      ))}
+    </>
+  )}
+</div>
+
+
+====================================================
+
+UI STATES FLOW:
+
+1. Initial State:
+
+loading = true
+
+Display:
+Loading Users...
+
+
+2. API Success:
+
+loading = false
+error = ""
+
+Display:
+User List
+
+
+3. API Failed:
+
+loading = false
+error = "Failed to fetch users"
+
+Display:
+Error Message
