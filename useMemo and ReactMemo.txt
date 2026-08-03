@@ -45,6 +45,8 @@ A. Filtering or Sorting a Large Dataset (Most Common)
 
    The Solution With useMemo:
 
+
+
    Example 1:
    import React, { useState, useMemo } from 'react';
 
@@ -54,6 +56,7 @@ A. Filtering or Sorting a Large Dataset (Most Common)
 
     // Heavy operation memoized:
     // Filtering and sorting only recalculates when `products` or `searchTerm` changes.
+    
     const visibleProducts = useMemo(() => {
         console.log('Filtering products...'); // Will NOT log when toggling dark mode!
         
@@ -203,7 +206,7 @@ function Child({ name }) {
 }
 
 function Parent() {
-  const [count, setCount] = React.useState(0);
+  const [count, setCount] = useState(0);
 
   return (
     <>
