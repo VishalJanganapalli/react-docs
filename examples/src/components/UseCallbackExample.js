@@ -1,24 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 
-/**
- * WHAT IS useCallback?
- * --------------------
- * useCallback is a React Hook used for PERFORMANCE OPTIMIZATION.
- * While `useMemo` caches the RESULT of a calculation, `useCallback` caches the 
- * FUNCTION DEFINITION (memory reference) itself between re-renders.
- *
- * WHY IS IT NEEDED?
- * -----------------
- * In JavaScript, functions are objects. Every time a component re-renders,
- * inline functions are re-created with brand NEW memory references.
- *
- * If you pass an un-memoized function as a prop to a child component wrapped in `React.memo`,
- * the child will think its props changed and RE-RENDER anyway!
- * `useCallback` preserves the same function reference across renders.
- */
 
-// Child component wrapped in React.memo
-// It only re-renders if its props change!
 const UserRow = React.memo(function UserRow({ user, onDelete }) {
   console.log(`⚡ [React.memo Child] UserRow rendered for: ${user.name}`);
 
@@ -55,32 +37,17 @@ const UserRow = React.memo(function UserRow({ user, onDelete }) {
 });
 
 export default function UseCallbackExample() {
-  // 1. Users list state fetched from API
   const [users, setUsers] = useState([]);
 
-  // 2. Unrelated Parent state (clicking this forces Parent to re-render)
   const [parentCounter, setParentCounter] = useState(0);
 
-  // Fetch users from API on mount
   useEffect(() => {
     fetch('https://jsonplaceholder.typicode.com/users')
       .then((res) => res.json())
       .then((data) => setUsers(data));
   }, []);
 
-  /**
-   * =========================================================================
-   * DEMO: useCallback
-   * =========================================================================
-   * WITHOUT useCallback:
-   * Constantly creates a NEW handleDelete function reference on every re-render of Parent.
-   * Passing it to <UserRow onDelete={handleDelete} /> forces ALL UserRows to re-render 
-   * even when UserRow is wrapped in React.memo!
-   *
-   * WITH useCallback:
-   * Keeps the EXACT same function reference in memory across re-renders!
-   * Now clicking "Increment Parent Counter" will NOT cause UserRow components to re-render!
-   */
+
   const handleDelete = useCallback((userIdToDelete) => {
     console.log(`🗑️ Deleting user with ID: ${userIdToDelete}`);
     setUsers((prevUsers) => prevUsers.filter((u) => u.id !== userIdToDelete));
