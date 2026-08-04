@@ -71,6 +71,8 @@ function App() {
         {activeTab === 'ReactMemo' && <ReactMemoExample />}
         {activeTab === 'useCallback' && <UseCallbackExample />}
       </main>
+
+     
     </div>
   );
 }

@@ -1,4 +1,0 @@
-  
-  const result = useMemo(()=>{
-         calcution
-  },[dependecy varaibles])

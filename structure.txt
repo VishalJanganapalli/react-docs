@@ -1,0 +1,362 @@
+my-react-app/
+├── public/
+│   ├── favicon.ico
+│   ├── robots.txt
+│   ├── manifest.json
+│   └── index.html
+│
+├── src/
+│   │
+│   ├── assets/
+│   │   ├── fonts/
+│   │   ├── icons/
+│   │   ├── images/
+│   │   ├── logos/
+│   │   └── styles/
+│   │       ├── globals.css
+│   │       ├── variables.css
+│   │       ├── reset.css
+│   │       └── animations.css
+│   │
+│   ├── components/
+│   │   ├── common/
+│   │   │   ├── Button/
+│   │   │   │   ├── Button.jsx
+│   │   │   │   ├── Button.module.css
+│   │   │   │   └── index.js
+│   │   │   │
+│   │   │   ├── Input/
+│   │   │   ├── Loader/
+│   │   │   ├── Modal/
+│   │   │   ├── Spinner/
+│   │   │   ├── Pagination/
+│   │   │   ├── SearchBar/
+│   │   │   ├── EmptyState/
+│   │   │   ├── ErrorMessage/
+│   │   │   └── ConfirmDialog/
+│   │   │
+│   │   ├── layout/
+│   │   │   ├── Navbar/
+│   │   │   ├── Sidebar/
+│   │   │   ├── Header/
+│   │   │   ├── Footer/
+│   │   │   ├── MainLayout/
+│   │   │   └── DashboardLayout/
+│   │   │
+│   │   └── ui/
+│   │       ├── Card/
+│   │       ├── Badge/
+│   │       ├── Avatar/
+│   │       ├── Tooltip/
+│   │       ├── Dropdown/
+│   │       ├── Table/
+│   │       ├── Tabs/
+│   │       ├── Accordion/
+│   │       └── Breadcrumb/
+│   │
+│   ├── features/
+│   │   │
+│   │   ├── auth/
+│   │   │   ├── components/
+│   │   │   │   ├── LoginForm.jsx
+│   │   │   │   ├── RegisterForm.jsx
+│   │   │   │   └── ForgotPasswordForm.jsx
+│   │   │   │
+│   │   │   ├── pages/
+│   │   │   │   ├── Login.jsx
+│   │   │   │   ├── Register.jsx
+│   │   │   │   └── ForgotPassword.jsx
+│   │   │   │
+│   │   │   ├── hooks/
+│   │   │   │   └── useAuth.js
+│   │   │   │
+│   │   │   ├── services/
+│   │   │   │   └── authApi.js
+│   │   │   │
+│   │   │   ├── utils/
+│   │   │   │   └── authValidation.js
+│   │   │   │
+│   │   │   ├── constants/
+│   │   │   │   └── authRoles.js
+│   │   │   │
+│   │   │   ├── authSlice.js
+│   │   │   └── index.js
+│   │   │
+│   │   ├── users/
+│   │   │   ├── components/
+│   │   │   ├── pages/
+│   │   │   ├── hooks/
+│   │   │   ├── services/
+│   │   │   ├── utils/
+│   │   │   ├── userSlice.js
+│   │   │   └── index.js
+│   │   │
+│   │   ├── products/
+│   │   │   ├── components/
+│   │   │   │   ├── ProductCard.jsx
+│   │   │   │   ├── ProductGrid.jsx
+│   │   │   │   ├── ProductForm.jsx
+│   │   │   │   ├── ProductFilter.jsx
+│   │   │   │   └── ProductTable.jsx
+│   │   │   │
+│   │   │   ├── pages/
+│   │   │   │   ├── Products.jsx
+│   │   │   │   ├── ProductDetails.jsx
+│   │   │   │   ├── AddProduct.jsx
+│   │   │   │   └── EditProduct.jsx
+│   │   │   │
+│   │   │   ├── hooks/
+│   │   │   │   └── useProducts.js
+│   │   │   │
+│   │   │   ├── services/
+│   │   │   │   └── productApi.js
+│   │   │   │
+│   │   │   ├── utils/
+│   │   │   │   ├── filterProducts.js
+│   │   │   │   └── sortProducts.js
+│   │   │   │
+│   │   │   ├── constants/
+│   │   │   │   └── categories.js
+│   │   │   │
+│   │   │   ├── productSlice.js
+│   │   │   └── index.js
+│   │   │
+│   │   ├── dashboard/
+│   │   ├── orders/
+│   │   ├── cart/
+│   │   ├── checkout/
+│   │   ├── notifications/
+│   │   ├── settings/
+│   │   └── profile/
+│   │
+│   ├── hooks/
+│   │   ├── useFetch.js
+│   │   ├── useDebounce.js
+│   │   ├── usePagination.js
+│   │   ├── useLocalStorage.js
+│   │   ├── useToggle.js
+│   │   ├── useWindowSize.js
+│   │   └── useTheme.js
+│   │
+│   ├── context/
+│   │   ├── AuthContext.jsx
+│   │   ├── ThemeContext.jsx
+│   │   ├── CartContext.jsx
+│   │   └── NotificationContext.jsx
+│   │
+│   ├── services/
+│   │   ├── api.js
+│   │   ├── axios.js
+│   │   ├── interceptors.js
+│   │   ├── authService.js
+│   │   ├── userService.js
+│   │   └── storageService.js
+│   │
+│   ├── store/
+│   │   ├── index.js
+│   │   ├── rootReducer.js
+│   │   └── middleware.js
+│   │
+│   ├── routes/
+│   │   ├── AppRoutes.jsx
+│   │   ├── ProtectedRoute.jsx
+│   │   ├── PublicRoute.jsx
+│   │   ├── routeConfig.js
+│   │   └── paths.js
+│   │
+│   ├── pages/
+│   │   ├── Home.jsx
+│   │   ├── About.jsx
+│   │   ├── Contact.jsx
+│   │   ├── NotFound.jsx
+│   │   └── Unauthorized.jsx
+│   │
+│   ├── utils/
+│   │   ├── formatDate.js
+│   │   ├── capitalize.js
+│   │   ├── currency.js
+│   │   ├── validation.js
+│   │   ├── storage.js
+│   │   ├── debounce.js
+│   │   ├── throttle.js
+│   │   └── helpers.js
+│   │
+│   ├── constants/
+│   │   ├── apiRoutes.js
+│   │   ├── appConstants.js
+│   │   ├── colors.js
+│   │   ├── roles.js
+│   │   ├── messages.js
+│   │   └── regex.js
+│   │
+│   ├── config/
+│   │   ├── axios.js
+│   │   ├── env.js
+│   │   ├── theme.js
+│   │   └── appConfig.js
+│   │
+│   ├── types/              # TypeScript only
+│   │   ├── user.ts
+│   │   ├── product.ts
+│   │   ├── auth.ts
+│   │   └── common.ts
+│   │
+│   ├── App.jsx
+│   ├── main.jsx
+│   └── index.css
+│
+├── .env
+├── .gitignore
+├── eslint.config.js
+├── package.json
+├── vite.config.js          # or webpack.config.js
+├── README.md
+└── jsconfig.json           # or tsconfig.json
+
+
+
+
+
+Recommended Rules
+components/: Shared, reusable UI (buttons, modals, tables, inputs).
+features/: Domain-specific code (auth, products, users). Keep components, hooks, services, and utilities that are only used by that feature here.
+pages/: Route-level components that assemble features and shared components.
+hooks/: Global reusable custom hooks.
+services/: Shared API clients and cross-feature services.
+utils/: Pure helper functions with no React dependencies.
+constants/: Static values, routes, regex patterns, roles, and messages.
+config/: Application configuration (environment, Axios setup, theme).
+store/: Global state management (Redux Toolkit, Zustand setup, etc.).
+context/: React Context providers when needed.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+my-react-app/
+├── public/
+│   ├── favicon.ico
+│   └── index.html
+│
+├── src/
+│
+│   ├── assets/
+│   │   ├── images/
+│   │   ├── icons/
+│   │   ├── fonts/
+│   │   └── styles/
+│   │       ├── global.css
+│   │       └── variables.css
+│   │
+│   ├── components/                # Reusable components
+│   │   ├── ui/
+│   │   │   ├── Button.jsx
+│   │   │   ├── Input.jsx
+│   │   │   ├── Card.jsx
+│   │   │   ├── Modal.jsx
+│   │   │   ├── Loader.jsx
+│   │   │   ├── Spinner.jsx
+│   │   │   └── Badge.jsx
+│   │   │
+│   │   ├── layout/
+│   │   │   ├── Navbar.jsx
+│   │   │   ├── Sidebar.jsx
+│   │   │   ├── Footer.jsx
+│   │   │   └── Header.jsx
+│   │   │
+│   │   └── common/
+│   │       ├── SearchBar.jsx
+│   │       ├── Pagination.jsx
+│   │       ├── EmptyState.jsx
+│   │       ├── ErrorMessage.jsx
+│   │       └── ProtectedRoute.jsx
+│   │
+│   ├── pages/
+│   │   ├── Home/
+│   │   │   ├── Home.jsx
+│   │   │   ├── Hero.jsx
+│   │   │   └── FeaturedProducts.jsx
+│   │   │
+│   │   ├── Login/
+│   │   │   ├── Login.jsx
+│   │   │   └── LoginForm.jsx
+│   │   │
+│   │   ├── Dashboard/
+│   │   │   ├── Dashboard.jsx
+│   │   │   ├── DashboardStats.jsx
+│   │   │   └── RecentOrders.jsx
+│   │   │
+│   │   ├── Profile/
+│   │   │   ├── Profile.jsx
+│   │   │   └── EditProfile.jsx
+│   │   │
+│   │   └── NotFound.jsx
+│   │
+│   ├── hooks/
+│   │   ├── useAuth.js
+│   │   ├── useFetch.js
+│   │   ├── useDebounce.js
+│   │   └── useLocalStorage.js
+│   │
+│   ├── services/
+│   │   ├── api.js
+│   │   ├── authService.js
+│   │   ├── userService.js
+│   │   └── productService.js
+│   │
+│   ├── context/
+│   │   ├── AuthContext.jsx
+│   │   └── ThemeContext.jsx
+│   │
+│   ├── utils/
+│   │   ├── formatDate.js
+│   │   ├── validation.js
+│   │   ├── helpers.js
+│   │   └── storage.js
+│   │
+│   ├── constants/
+│   │   ├── routes.js
+│   │   ├── apiRoutes.js
+│   │   └── constants.js
+│   │
+│   ├── routes/
+│   │   └── AppRoutes.jsx
+│   │
+│   ├── config/
+│   │   └── axios.js
+│   │
+│   ├── App.jsx
+│   ├── main.jsx
+│   └── index.css
+│
+├── .env
+├── package.json
+├── vite.config.js
+└── README.md
+
+
+
+| Folder                | Contains                                                                   |
+| --------------------- | -------------------------------------------------------------------------- |
+| **assets**            | Images, icons, fonts, global styles                                        |
+| **components/ui**     | Small reusable UI elements (Button, Card, Input, Modal, Loader)            |
+| **components/layout** | Layout components (Navbar, Sidebar, Footer, Header)                        |
+| **components/common** | Shared functionality (Pagination, SearchBar, ProtectedRoute, ErrorMessage) |
+| **pages**             | Route-level pages and components used only by that page                    |
+| **hooks**             | Reusable custom hooks                                                      |
+| **services**          | API calls and Axios configuration                                          |
+| **context**           | React Context providers                                                    |
+| **utils**             | Helper functions                                                           |
+| **constants**         | Static values and application constants                                    |
+| **routes**            | React Router configuration                                                 |
+| **config**            | App configuration (Axios instance, environment settings)                   |

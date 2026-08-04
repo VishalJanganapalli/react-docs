@@ -1,0 +1,352 @@
+Q. What is Lazy Loading ?
+A. Lazy loading in React is one of the most useful performance optimization techniques. 
+The main idea is simple: Don't load code until the user actually needs it.
+
+Instead of downloading your entire application on the first page load, 
+React can split your application into smaller pieces (called chunks) and load those chunks only when required.
+
+
+Q. Why do we need Lazy Loading?
+A. Imagine you're building an e-commerce website.
+   Your app has these pages:
+   Home, Products, Product Details, Cart, Wishlist, Orders, Admin Dashboard, Analytics
+       
+   Without Lazy Loading:
+   User opens Home page, but browser downloads: All pages, All images and Everything
+   Even though the user only visited the Home page.
+
+   This makes : 
+       Bigger bundle size
+       Slower loading
+       More data usage
+       Worse user experience
+
+
+   With Lazy Loading : 
+   Browser downloads only : Home, Navbar, Footer, Basic CSS
+   When user clicks Products, then React downloads Products.js
+   Same like this it works for all the components , this is called lazy loading.
+       
+
+
+Q. What exactly is Lazy Loading?
+
+   Normally we import like this : 
+   import Home from "./Home";
+   import Cart from "./Cart";
+   import Orders from "./Orders";
+   React bundles all these files together.
+
+   Instead, React provides
+   React.lazy() - which delays importing until needed.
+
+   import { lazy } from "react";
+   const Home = lazy(() => import("./Home"));
+   The import happens only when React renders that component.
+
+
+
+Q. Why Suspense?
+
+  Since downloading takes time,
+  React needs something to show while downloading.
+  That's where Suspense comes in.
+  import { Suspense, lazy } from "react";
+
+const Dashboard = lazy(() => import("./Dashboard"));
+
+function App() {
+  return (
+    <Suspense fallback={<h2>Loading...</h2>}>
+      <Dashboard />
+    </Suspense>
+  );
+}
+
+Without Suspense - React throws an error because it doesn't know what to render while waiting.
+       
+       
+       
+       
+
+Real Example
+
+Folder
+
+src/
+│
+├── App.jsx
+│
+└── pages/
+    ├── Home.jsx
+    ├── Products.jsx
+    └── Cart.jsx
+
+
+App.jsx
+
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Suspense, lazy } from "react";
+
+const Home = lazy(() => import("./pages/Home"));
+const Products = lazy(() => import("./pages/Products"));
+const Cart = lazy(() => import("./pages/Cart"));
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Suspense fallback={<h1>Loading...</h1>}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/cart" element={<Cart />} />
+        </Routes>
+      </Suspense>
+    </BrowserRouter>
+  );
+}
+
+export default App;
+
+
+What happens?
+
+Initially Downloaded:
+- App.jsx
+- Navbar
+- Home.jsx
+
+Later:
+- Products.jsx downloads only when the user visits the Products page.
+
+
+What happens internally?
+
+Suppose your application size is:
+
+App         50 KB
+Home        50 KB
+Products   120 KB
+Cart        80 KB
+Dashboard 250 KB
+Charts     500 KB
+
+Total = 1000 KB
+
+
+Without Lazy Loading
+
+- Entire application (1000 KB) is downloaded on the first load.
+- Even if the user never visits Products, Cart, Dashboard, or Charts, those files are still downloaded.
+
+
+With Lazy Loading
+
+Initial Download:
+- App
+- Home
+- Navbar
+
+≈ 100 KB
+
+When the user visits Products:
++ 120 KB (Products bundle)
+
+When the user visits Dashboard:
++ 250 KB (Dashboard bundle)
+
+When the user opens Charts:
++ 500 KB (Charts bundle)
+
+
+Result
+
+The browser downloads only the code that the user actually needs.
+
+Benefits:
+- Faster initial page load
+- Smaller initial bundle size
+- Better performance
+- Reduced bandwidth usage
+- Improved user experience
+
+
+
+
+
+When should we use Lazy Loading?
+
+Use Lazy Loading for:
+
+1. Route/Page Components
+
+Examples:
+- Home
+- About
+- Contact
+- Dashboard
+- Products
+
+This is the most common use case because each page is loaded only when the user navigates to it.
+
+
+2. Large Components
+
+Examples:
+- Rich Text Editor
+- PDF Viewer
+- Image Editor
+- Video Player
+
+These components are usually large in size and may not be needed immediately.
+
+
+3. Admin Modules
+
+Examples:
+- Admin
+- Reports
+- Analytics
+
+Most users may never access these pages, so loading them only when needed improves performance.
+
+
+4. Heavy Libraries
+
+Examples:
+- Chart.js
+- Monaco Editor
+- Leaflet Maps
+- Three.js
+
+These libraries significantly increase the bundle size. Lazy loading ensures they are downloaded only when required.
+
+
+5. Rarely Opened Dialogs or Modals
+
+Example:
+- Delete Account Modal
+
+There is no need to download this component during the initial page load.
+Instead, load it only when the user clicks the "Delete" button.
+
+
+
+
+
+When should we NOT use Lazy Loading?
+
+1. Tiny Components
+
+Bad Example:
+const Button = lazy(() => import("./Button"));
+
+Reason:
+The network request overhead can be greater than the small performance benefit gained from lazy loading a tiny component.
+
+
+2. Common Layout Components
+
+Do not lazy load:
+- Navbar
+- Header
+- Footer
+
+Reason:
+These components appear on every page, so they are always needed immediately.
+
+
+3. Initial Page Components
+
+Example:
+- Login Form (if Login is the first page)
+
+Reason:
+The user cannot interact with the application until this component is loaded, so lazy loading provides little or no benefit.
+
+
+4. Loading Component
+
+Do not lazy load:
+- Loader
+- Spinner
+- Loading Screen
+
+Reason:
+This creates a circular dependency—you would be waiting to load the component that is supposed to display the loading state.
+
+
+Summary
+
+Use Lazy Loading for:
+- Route/Page components
+- Large components
+- Admin modules
+- Heavy third-party libraries
+- Rarely used dialogs and modals
+
+Avoid Lazy Loading for:
+- Small components
+- Navbar, Header, Footer
+- First-page components (like Login)
+- Loader or Spinner components
+
+
+
+
+Component-based Lazy Loading?
+
+Example : in Dashboard page
+
+Dashboard
+Charts
+Maps
+Reports
+Notifications
+
+In this only Charts are heavy.
+
+
+const Charts = lazy(() => import("./Charts"));
+
+function Dashboard() {
+  return (
+    <>
+      <Header />
+
+      <Suspense fallback={<p>Loading Charts...</p>}>
+        <Charts />
+      </Suspense>
+    </>
+  );
+}
+
+
+
+for images use loading = lazy  -  attribute.
+
+
+
+
+
+
+
+
+Interview Questions
+
+1. What is lazy loading in React?
+A technique to load components only when they are needed, reducing the initial JavaScript bundle size and improving application startup performance.
+
+2. What is React.lazy?
+A function that allows components to be loaded dynamically using JavaScript's import().
+
+3. Why is Suspense required?
+Because lazy-loaded components are loaded asynchronously, Suspense provides a fallback UI while React waits for the component to download.
+
+4. What is the difference between lazy loading and code splitting?
+
+Code splitting is the process of dividing your JavaScript bundle into smaller chunks.
+Lazy loading is the strategy of loading those chunks only when they are needed.
+
+5. Can you lazy load a component without routing?
+Yes. Any component can be lazy loaded—for example, a chart, modal, PDF viewer, or image editor that is only shown after a user action.
