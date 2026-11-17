@@ -3,17 +3,19 @@ import './App.css';
 import UseMemoExample from './components/UseMemoExample';
 import ReactMemoExample from './components/ReactMemoExample';
 import UseCallbackExample from './components/UseCallbackExample';
+import UserDetails from './pages/UserDetails';
+import GetProducts from './pages/GetProducts';
+import Themepage from './pages/Themepage';
 
 function App() {
   const [activeTab, setActiveTab] = useState('useMemo');
 
   return (
     <div className="App" style={{ maxWidth: '900px', margin: '0 auto', padding: '20px' }}>
-      <header style={{ textAlign: 'center', marginBottom: '20px' }}>
+      {/* <header style={{ textAlign: 'center', marginBottom: '20px' }}>
         <h1 style={{ color: '#1e293b' }}>React Performance Optimization Examples</h1>
         <p style={{ color: '#64748b' }}>Data fetched from <code>https://jsonplaceholder.typicode.com/users</code></p>
 
-        {/* Navigation Tabs */}
         <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', marginTop: '15px', flexWrap: 'wrap' }}>
           <button
             onClick={() => setActiveTab('useMemo')}
@@ -63,16 +65,21 @@ function App() {
             3. useCallback Example (Hook)
           </button>
         </div>
-      </header>
+      </header> */}
 
       {/* Render selected component */}
-      <main style={{ background: '#ffffff', borderRadius: '10px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)', padding: '20px' }}>
+      {/* <main style={{ background: '#ffffff', borderRadius: '10px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)', padding: '20px' }}>
         {activeTab === 'useMemo' && <UseMemoExample />}
         {activeTab === 'ReactMemo' && <ReactMemoExample />}
         {activeTab === 'useCallback' && <UseCallbackExample />}
-      </main>
+      </main> */}
 
-     
+      <UserDetails/>
+
+      <GetProducts/>
+
+      <Themepage/>
+
     </div>
   );
 }

@@ -1,0 +1,52 @@
+REACT DAY 6 PRACTICE TASKS
+Form Validation
+
+Build each task with a normal React form component and useState. Keep the form
+inputs in the same component. You do not need to create reusable components or
+pass props.
+
+============================================================
+TASK 1 - REQUIRED FIELDS
+============================================================
+
+Create a form with name and message fields.
+
+Requirements:
+- Show an error if either field is empty or contains only spaces.
+- Stop the form from submitting while an error is present.
+
+============================================================
+TASK 2 - EMAIL AND PASSWORD
+============================================================
+
+Create a registration form with email, password, and confirm-password fields.
+
+Requirements:
+- Check that the email looks valid.
+- Require a password of at least 6 characters.
+- Check that the passwords match.
+- Show an error beside each field that needs to be fixed.
+
+============================================================
+TASK 3 - CONDITIONAL FIELD
+============================================================
+
+Add a dropdown with Personal and Company account types.
+
+Requirements:
+- Show the company-name field only for a Company account.
+- Require a company name only when Company is selected.
+- Do not show a company-name error when Personal is selected.
+
+============================================================
+TASK 4 - COMPLETE REGISTRATION FORM
+============================================================
+
+Combine the earlier tasks into one registration form.
+
+Requirements:
+- Validate the fields when the form is submitted.
+- Display clear error messages beside invalid fields.
+- Display a success message when the fields are valid.
+- Keep the code in one component; no custom components or props are needed.
+- Remember that important data must also be checked by the server.

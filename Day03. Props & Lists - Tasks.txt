@@ -1,0 +1,360 @@
+🧠 React Day 3 Practice Tasks (Props + Lists + Keys + map)
+
+🟢 LEVEL 1 — Basics (Warm-up)
+
+1. Student Card UI
+Create a StudentCard component that shows:
+- name
+- age
+- city
+
+👉 Pass data using props from parent.
+
+--------------------------------------------------
+
+2. Skills List
+Given:
+const skills = ["HTML", "CSS", "JS", "React"];
+
+👉 Task:
+- Render all skills using .map()
+- Show inside <li> tags
+
+--------------------------------------------------
+
+3. Simple User Greeting
+Create a component:
+
+👉 Condition:
+- If isLoggedIn = true → show "Welcome User"
+- Else → show "Please Login"
+
+--------------------------------------------------
+
+🟡 LEVEL 2 — Intermediate
+
+4. Car Cards UI
+Given an array of cars:
+
+👉 Tasks:
+- Render car cards
+- Show:
+  - image
+  - model
+  - brand
+  - price and more data
+- Show status:
+  - 🟢 Available (true)
+  - 🔴 Not Available (false)
+
+--------------------------------------------------
+
+5. Filter Available Cars Only -  use Filter method
+👉 Show ONLY cars where:
+car.isAvailable === true
+
+--------------------------------------------------
+
+6. Highlight Expensive Cars
+👉 Condition:
+- If price > 50000 → show badge "Premium Car"
+- Else → "Standard Car"
+
+--------------------------------------------------
+
+7. Conditional Color UI
+👉 Task:
+Change card border color:
+- 🟢 Green → available
+- 🔴 Red → not available
+
+--------------------------------------------------
+
+🔵 LEVEL 3 — Advanced (Interview Level)
+
+8. Sort Cars (IMPORTANT)
+Add buttons for sorting:
+- Sort by Price (Low → High)
+- Sort by Price (High → Low)
+- Sort by Year (Newest first)
+
+👉 Hint:
+cars.sort((a, b) => a.price - b.price)
+
+--------------------------------------------------
+
+9. Dynamic Badge System (Interview Level)
+👉 Task:
+
+For products:
+
+price > 3000 → 🔥 Premium
+price 1000–3000 → ⭐ Mid
+price < 1000 → 🟢 Budget
+
+👉 Show badge next to product name
+
+💡 Hint:
+Use .map() to loop through products
+Create a variable like badge inside .map()
+Use if-else OR ternary conditions to assign badge
+Then display it inside JSX like:
+
+--------------------------------------------------
+
+10 . Highlight Expensive Product
+
+👉 Task: (take the data of products)
+If price > 1000:
+
+show "Expensive"
+Else:
+show "Affordable"
+
+--------------------------------------------------
+
+11. Filter Cars by Price
+
+Display cars whose price is greater than 30000.
+Display cars whose price is less than 30000.
+
+💡 Hint:
+Use .filter().
+
+--------------------------------------------------
+
+12. Finding based on Condition
+
+Find the Most Expensive Car
+Find the car with the highest price.
+Display its model, brand and price.
+
+💡 Hint:
+Use .sort() and use[0].
+
+--------------------------------------------------
+
+13. Filter Cars by Manufacturing Year
+
+Display cars manufactured between 2022 and 2025.
+
+💡 Hint:
+Use .filter().
+
+--------------------------------------------------
+
+
+DATA TO USE FOR THE ABOVE CARS RELATED QUESTIONS : 
+==================================================
+const cars = [
+  {
+    id: 1,
+    model: "BMW 3 Series",
+    brand: "BMW",
+    price: 65000,
+    year: 2024,
+    color: "Black",
+    fuelType: "Petrol",
+    transmission: "Automatic",
+    mileage: 15,
+    isAvailable: true,
+    image: "https://placehold.co/300x200?text=BMW",
+    engine: {
+      capacity: "1998cc",
+      horsepower: 255
+    },
+    owner: {
+      name: "Rahul",
+      city: "Hyderabad"
+    }
+  },
+  {
+    id: 2,
+    model: "Audi A4",
+    brand: "Audi",
+    price: 45000,
+    year: 2023,
+    color: "White",
+    fuelType: "Diesel",
+    transmission: "Automatic",
+    mileage: 18,
+    isAvailable: false,
+    image: "https://placehold.co/300x200?text=Audi",
+    engine: {
+      capacity: "1968cc",
+      horsepower: 190
+    },
+    owner: {
+      name: "Priya",
+      city: "Bangalore"
+    }
+  },
+  {
+    id: 3,
+    model: "Mercedes C-Class",
+    brand: "Mercedes",
+    price: 75000,
+    year: 2025,
+    color: "Silver",
+    fuelType: "Petrol",
+    transmission: "Automatic",
+    mileage: 14,
+    isAvailable: true,
+    image: "https://placehold.co/300x200?text=Mercedes",
+    engine: {
+      capacity: "1999cc",
+      horsepower: 255
+    },
+    owner: {
+      name: "Arjun",
+      city: "Chennai"
+    }
+  },
+  {
+    id: 4,
+    model: "Hyundai Creta",
+    brand: "Hyundai",
+    price: 18000,
+    year: 2022,
+    color: "Red",
+    fuelType: "Diesel",
+    transmission: "Manual",
+    mileage: 21,
+    isAvailable: true,
+    image: "https://placehold.co/300x200?text=Creta",
+    engine: {
+      capacity: "1493cc",
+      horsepower: 113
+    },
+    owner: {
+      name: "Kiran",
+      city: "Hyderabad"
+    }
+  },
+  {
+    id: 5,
+    model: "Tata Nexon",
+    brand: "Tata",
+    price: 15000,
+    year: 2021,
+    color: "Blue",
+    fuelType: "Petrol",
+    transmission: "Manual",
+    mileage: 17,
+    isAvailable: false,
+    image: "https://placehold.co/300x200?text=Nexon",
+    engine: {
+      capacity: "1199cc",
+      horsepower: 118
+    },
+    owner: {
+      name: "Sneha",
+      city: "Mumbai"
+    }
+  },
+  {
+    id: 6,
+    model: "Tesla Model 3",
+    brand: "Tesla",
+    price: 55000,
+    year: 2024,
+    color: "White",
+    fuelType: "Electric",
+    transmission: "Automatic",
+    mileage: 0,
+    isAvailable: true,
+    image: "https://placehold.co/300x200?text=Tesla",
+    engine: {
+      capacity: "Electric Motor",
+      horsepower: 283
+    },
+    owner: {
+      name: "Vikram",
+      city: "Delhi"
+    }
+  },
+  {
+    id: 7,
+    model: "Toyota Fortuner",
+    brand: "Toyota",
+    price: 48000,
+    year: 2023,
+    color: "Black",
+    fuelType: "Diesel",
+    transmission: "Automatic",
+    mileage: 12,
+    isAvailable: false,
+    image: "https://placehold.co/300x200?text=Fortuner",
+    engine: {
+      capacity: "2755cc",
+      horsepower: 201
+    },
+    owner: {
+      name: "Amit",
+      city: "Pune"
+    }
+  },
+  {
+    id: 8,
+    model: "Honda City",
+    brand: "Honda",
+    price: 22000,
+    year: 2022,
+    color: "Grey",
+    fuelType: "Petrol",
+    transmission: "CVT",
+    mileage: 18,
+    isAvailable: true,
+    image: "https://placehold.co/300x200?text=Honda",
+    engine: {
+      capacity: "1498cc",
+      horsepower: 119
+    },
+    owner: {
+      name: "Neha",
+      city: "Hyderabad"
+    }
+  },
+  {
+    id: 9,
+    model: "Kia Seltos",
+    brand: "Kia",
+    price: 28000,
+    year: 2025,
+    color: "Green",
+    fuelType: "Petrol",
+    transmission: "Automatic",
+    mileage: 17,
+    isAvailable: true,
+    image: "https://placehold.co/300x200?text=Seltos",
+    engine: {
+      capacity: "1482cc",
+      horsepower: 158
+    },
+    owner: {
+      name: "Rohit",
+      city: "Bangalore"
+    }
+  },
+  {
+    id: 10,
+    model: "Maruti Swift",
+    brand: "Maruti Suzuki",
+    price: 9000,
+    year: 2020,
+    color: "Red",
+    fuelType: "Petrol",
+    transmission: "Manual",
+    mileage: 22,
+    isAvailable: false,
+    image: "https://placehold.co/300x200?text=Swift",
+    engine: {
+      capacity: "1197cc",
+      horsepower: 80
+    },
+    owner: {
+      name: "Anil",
+      city: "Chennai"
+    }
+  }
+];

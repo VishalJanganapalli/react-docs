@@ -1,0 +1,67 @@
+REACT DAY 9 PRACTICE TASKS
+API Integration
+
+Use JSONPlaceholder for practice:
+https://jsonplaceholder.typicode.com
+
+Its write requests return sample responses; they do not permanently change data.
+
+============================================================
+TASK 1 - FETCH AND DISPLAY
+============================================================
+
+Fetch /users when the component mounts and display each user's name and email.
+
+Requirements:
+- Use fetch, async/await, and useEffect.
+- Check response.ok before parsing the response.
+- Show loading, error, empty, and success states.
+- Render each user with a stable key.
+- Abort an in-flight request when the component unmounts.
+
+============================================================
+TASK 2 - CREATE A POST
+============================================================
+
+Create a small form that sends a title, body, and userId to /posts with POST.
+
+Requirements:
+- Send JSON with the correct Content-Type header.
+- Disable the submit button while the request is in progress.
+- Show the created response or a useful error message.
+- Prevent empty title and body values from being submitted.
+
+============================================================
+TASK 3 - UPDATE A POST
+============================================================
+
+Add an edit action that sends updated title and body values to /posts/1 with PUT.
+
+Requirements:
+- Put the record ID in the URL.
+- Send a JSON request body.
+- Check the response and display success or failure.
+
+============================================================
+TASK 4 - DELETE A POST
+============================================================
+
+Add a delete action for /posts/1.
+
+Requirements:
+- Use the DELETE method.
+- Check response.ok.
+- Do not assume the response includes JSON.
+- Update the UI only after the request succeeds.
+
+============================================================
+TASK 5 - REPEAT WITH AXIOS
+============================================================
+
+Install Axios and implement the GET /users request from Task 1 with Axios.
+
+Requirements:
+- Read response.data.
+- Show loading and error states.
+- Handle an Axios HTTP error separately from a network error.
+- Compare how fetch and Axios handle non-success HTTP statuses.

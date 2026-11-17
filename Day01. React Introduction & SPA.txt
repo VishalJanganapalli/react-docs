@@ -5,9 +5,9 @@ A: React is a Frontend JavaScript Library which is used to built ui(frontend) an
    Websites built on REACT :  Facebook, Instagram, Netflix, Airbnb, Youtube etc...
 
 
-** What is a Single page application ?
+** What is a Single page application 
 A: An application which loads only once is known as single page application
-   when ever we chnage the page or navigate to other pages it dont refreshs the pages
+   when ever we change the page or navigate to other pages it dont refreshs the pages
    it will just replace the content with current HTML with new HTML.
 
 
@@ -54,6 +54,11 @@ A: Library :
    Comparatively steeper learning curve.
    Limited customization.
    Example : Angular, Django, Spring Boot
+
+
+
+
+
 
 
 

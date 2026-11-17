@@ -259,21 +259,6 @@ No array      -> Run after every render.
 
 
 ==================================================
-CLASS LIFECYCLE VS useEffect
-==================================================
-
-+------------------------+--------------------------------------+
-| Class Lifecycle Method | useEffect Equivalent                 |
-+------------------------+--------------------------------------+
-| componentDidMount()    | useEffect(() => {}, [])              |
-|                        |                                      |
-| componentDidUpdate()   | useEffect(() => {}, [dependency])    |
-|                        |                                      |
-| componentWillUnmount() | Cleanup function in useEffect        |
-+------------------------+--------------------------------------+
-
-
-==================================================
 COMMON INTERVIEW QUESTIONS
 ==================================================
 

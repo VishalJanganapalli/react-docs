@@ -235,26 +235,6 @@ A. State lifting (or lifting state up) is a React pattern where you move state f
     export default Display;
 
 
-    Visual Difference
-    Child-to-Child Communication (Requirement)
-            App
-        /   \
-    Input   Display
-
-    Input wants to send data directly to Display
-            ❌ Not possible
-            
-    State Lifting (Solution)
-            App
-    (name state lives here)
-        /              \
-    Input              Display
-        ▲                 ▲
-        │                 │
-    updates state     receives props
-
-
-
 Simple Way to Remember : 
 Parent → Child = Props
 Child → Parent = Callback function

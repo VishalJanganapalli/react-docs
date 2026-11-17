@@ -1,0 +1,348 @@
+Custom Hook in React : 
+A Custom Hook is one of the most powerful features in React. 
+It helps you extract reusable logic from components so that you don't repeat the same code in multiple places.
+
+
+1. What is a Custom Hook?
+A Custom Hook is simply a JavaScript function whose name starts with use and which can use other React Hooks like:
+useState, useEffect, useContext, useMemo, useCallback, useReducer, etc.
+It allows us to reuse stateful logic across multiple components.
+
+Simple Definition :
+A custom hook is a reusable function that contains React hook logic.
+
+It is not a special React feature.
+It is simply a function following React Hook rules.
+
+
+
+2. Why do we use Custom Hooks?
+Because React applications grow quickly.
+
+Imagine an e-commerce website.
+Many pages need:
+Authentication
+API calls
+Pagination
+Search
+Theme
+Network status
+Local Storage
+Dark mode
+Window resize
+Form validation
+
+Without hooks, you repeat code everywhere.
+Custom hooks solve this.
+
+
+
+3. When Should We Create a Custom Hook?
+Create a Custom Hook when : Logic is repeated.
+
+Example:
+Fetching API
+Authentication
+Window resize
+Search
+Forms
+
+Don't create one when : The logic is used only once.
+
+
+
+4. Rules of Custom Hooks?
+
+Rule 1 : 
+Start with : use
+
+Rule 2 : 
+Call hooks only at the top level.
+
+Rule 3 : 
+Call only inside
+React Components
+Custom Hooks
+
+Never inside : 
+loops
+conditions
+normal functions
+
+
+
+5. How to Create a Custom Hook
+
+Step 1 : create useUser.js
+
+Step 2 : 
+import { useEffect, useState } from "react";
+
+function useUser() {
+    const [user, setUser] = useState(null);
+        useEffect(() => {
+            fetch("/api/user").then(res => res.json()).then(data => setUser(data));
+        }, []);
+        return user;
+    }
+export default useUser;
+
+Step 3 :
+function Dashboard(){
+
+const user = useUser();
+return <h1>{user?.name}</h1>
+
+}
+
+
+
+=======================================================================
+Example : THEME TOGGLER 
+
+CREATE THE CUSTOM HOOK : useTheme.js
+
+const useTheme = (initialTheme = "light") => {
+  const [theme, setTheme] = useState(initialTheme);
+
+  const toggleTheme = () => {
+    setTheme((prevTheme) =>
+      prevTheme === "light" ? "dark" : "light"
+    );
+  };
+
+  return { theme, toggleTheme };
+};
+
+USING IN THE COMPOENNTS : 
+
+import React from "react";
+import useTheme from "./useTheme";
+
+function App() {
+  const { theme, toggleTheme } = useTheme();
+
+  return (
+    <div
+      style={{
+        backgroundColor: theme === "light" ? "#fff" : "#333",
+        color: theme === "light" ? "#000" : "#fff",
+        minHeight: "100vh",
+        padding: "20px",
+      }}
+    >
+      <h2>{theme.toUpperCase()} MODE</h2>
+
+      <button onClick={toggleTheme}>
+        Toggle Theme
+      </button>
+    </div>
+  );
+}
+
+export default App;
+
+
+========================================================================
+Example : API CALL
+
+CREATE THE CUSTOM HOOK : useFetch.js
+
+import { useState, useEffect } from "react";
+import axios from "axios";
+
+const useFetch = (url) => {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(url);
+        setData(response.data);
+      } catch (err) {
+        setError(err.message || "Something went wrong");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [url]);
+
+  return { data, loading, error };
+};
+
+export default useFetch;
+
+
+USE IN THE COMPONENTS : 
+
+import React from "react";
+import useFetch from "./useFetch";
+
+const Users = () => {
+  const {
+    data: users,
+    loading,
+    error,
+  } = useFetch("https://jsonplaceholder.typicode.com/users");
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
+
+  return (
+    <div>
+      <h2>Users List</h2>
+      <ul>
+        {users.map((user) => (
+          <li key={user.id}>
+            {user.name} - {user.email}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+export default Users;
+=========================================================================
+
+
+=========================================================================
+Example : FILTRATION
+
+CRAETE A HOOK :  useFilter.js
+import { useMemo } from "react";
+
+function useFilter(items, searchTerm) {
+  return useMemo(() => {
+    return items.filter((item) =>
+      item.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }, [items, searchTerm]);
+}
+
+export default useFilter;
+
+
+USING IN THE COMPONENT : 
+import { useState } from "react";
+import useFilter from "./useFilter";
+
+const users = [
+  { id: 1, name: "John" },
+  { id: 2, name: "Alice" },
+  { id: 3, name: "Bob" },
+];
+
+function UserList() {
+  const [search, setSearch] = useState("");
+
+  const filteredUsers = useFilter(users, search);
+
+  return (
+    <>
+      <input
+        placeholder="Search"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
+
+      {filteredUsers.map((user) => (
+        <p key={user.id}>{user.name}</p>
+      ))}
+    </>
+  );
+}
+
+======================================================================
+
+
+======================================================================
+
+Example : DEBOUNCING
+
+CREATE A HOOK : useDebounce.js
+
+import { useState, useEffect } from "react";
+
+const useDebounce = (value, delay = 500) => {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+
+  useEffect(() => {
+    // Start a timer whenever the value changes
+    const timer = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+
+    // Clear the previous timer if the value changes again
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [value, delay]);
+
+  return debouncedValue;
+};
+
+export default useDebounce;
+
+
+USING INSIDE THE COMPONENT : 
+
+import { useState, useEffect } from "react";
+import useDebounce from "./useDebounce";
+
+function Search() {
+  const [search, setSearch] = useState("");
+
+  // Wait 500ms after the user stops typing
+  const debouncedSearch = useDebounce(search, 500);
+
+  useEffect(() => {
+    if (debouncedSearch) {
+      console.log("API Call:", debouncedSearch);
+
+      // Example:
+      // axios.get(`/users?search=${debouncedSearch}`);
+    }
+  }, [debouncedSearch]);
+
+  return (
+    <div>
+      <input
+        type="text"
+        placeholder="Search users..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
+
+      <p>Typing: {search}</p>
+      <p>Debounced Value: {debouncedSearch}</p>
+    </div>
+  );
+}
+
+export default Search;
+
+========================================================================
+
+
+
+Advantages : 
+Eliminates duplicate code.
+Makes components smaller and easier to read.
+Encourages separation of UI and business logic.
+Easier to test and maintain.
+Improves consistency across the application.
+Promotes modular architecture.
+
+
+When NOT to Use Custom Hooks
+Don't create a custom hook if:
+The logic is used only once.
+It's just a simple helper function without React Hooks.
+The abstraction makes the code harder to understand.
+The hook becomes too large and handles unrelated responsibilities.

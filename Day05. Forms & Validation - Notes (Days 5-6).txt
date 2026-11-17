@@ -54,11 +54,8 @@ function App() {
 ### Characteristics
 
 ✔ Value comes from state.
-
 ✔ Uses `onChange`.
-
 ✔ React controls the input.
-
 ✔ Easier validation.
 
 ---
