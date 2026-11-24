@@ -255,7 +255,7 @@ DEPENDENCY ARRAY RULES
 
 [count, name] -> Run when count or name changes.
 
-No array      -> Run after every render.
+without array      -> Run after every render.
 
 
 ==================================================
@@ -397,13 +397,6 @@ the report card is regenerated.
 Behavior:
 ✔ Runs when count changes
 ✔ Runs when name changes
-
-
-
-
-
-
-
 
 
 

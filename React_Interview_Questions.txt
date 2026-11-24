@@ -1,0 +1,69 @@
+IMPORTANT REACT JS INTERVIEW QUESTIONS
+================================================================================================
+
+1. What is React JS, and what are its main features?
+2. What is a Single Page Application (SPA)?
+3. What is the Virtual DOM, and how does it work?
+4. What is the difference between Virtual DOM and Real DOM?
+5. What is JSX, and why do we use it?
+6. What is the difference between JSX and HTML?
+7. What are components in React?
+8. What is the difference between Functional Components and Class Components?
+9. What is the difference between named export and default export?
+10. What is component reusability?
+
+================================================================================================
+
+11. What are Props in React?
+12. What is State in React?
+13. What is the difference between Props and State?
+14. How do you pass data from parent to child components?
+15. Can we modify Props inside a child component?
+16. What is the use of the map() method in React?
+17. Why are keys important when rendering lists?
+18. Why should we avoid using array indexes as keys?
+19. What is the useState() hook?
+20. How do you update an object or array in React state?
+
+=================================================================================================
+
+21. What is event handling in React?
+22. What is the difference between onClick={handleClick} and onClick={handleClick()}?
+23. What are Controlled and Uncontrolled Components?
+24. How do you handle form inputs in React?
+25. How do you handle form submission in React?
+26. What is event.preventDefault()?
+27. How do you handle multiple input fields using a single state?
+28. How do you perform form validation in React?
+29. How do you display validation error messages?
+30. What is CRUD, and how do you implement Create, Read, Update and Delete operations?
+
+===================================================================================================
+
+31. What is the useEffect() hook, and why is it used?
+32. What is a dependency array in useEffect()?
+33. What happens when we use an empty dependency array []?
+34. What happens when we don't provide a dependency array?
+35. What is the cleanup function in useEffect()?
+36. What are Side Effects in React?
+37. What is the difference between useEffect() and useState()?
+38. What is an API, and how do you integrate an API in React?
+39. What is the difference between Axios and Fetch API?
+40. How do you fetch API data using Axios and useEffect() in React?
+
+===================================================================================================
+
+41. What is the difference between Fetch API and Axios?
+42. What is a Promise in JavaScript?
+43. What is the difference between async/await and .then()?
+44. How do you handle loading and error states during API calls?
+45. What is the purpose of try...catch?
+46. What are the differences between GET, POST, PUT, PATCH and DELETE?
+47. What is the difference between map(), filter() and find()?
+48. What is Conditional Rendering in React?
+49. What is the difference between if-else, ternary operator and logical AND (&&) in JSX?
+50. How would you explain your React CRUD project and its complete working flow?
+
+51. What is optional chaining?
+52. What is destructuring in JavaScript?
+53. What is React StrictMode?
